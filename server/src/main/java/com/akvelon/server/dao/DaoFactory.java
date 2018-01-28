@@ -1,12 +1,8 @@
 package com.akvelon.server.dao;
 
 import com.akvelon.server.dao.api.Dao;
-import com.akvelon.server.dao.impl.CultureDaoImpl;
-import com.akvelon.server.dao.impl.ProductCategoryDaoImpl;
-import com.akvelon.server.dao.impl.ProductPhotoDaoImpl;
-import com.akvelon.server.model.Culture;
-import com.akvelon.server.model.ProductCategory;
-import com.akvelon.server.model.ProductPhoto;
+import com.akvelon.server.dao.impl.*;
+import com.akvelon.server.model.*;
 
 
 public class DaoFactory {
@@ -15,6 +11,8 @@ public class DaoFactory {
     private Dao<Integer, ProductCategory> productCategoryDao;
     private Dao<String, Culture> cultureDao;
     private Dao<Integer, ProductPhoto> productPhotoDao;
+    private Dao<Integer, Illustration> illustrationDao;
+    private Dao<Integer, ProductSubcategory> productSubcategoryDao;
 
     private DaoFactory() {
         loadDao();
@@ -32,6 +30,8 @@ public class DaoFactory {
         productCategoryDao = ProductCategoryDaoImpl.getInstance();
         cultureDao = CultureDaoImpl.getInstance();
         productPhotoDao = ProductPhotoDaoImpl.getInstance();
+        illustrationDao = IllustrationDaoImpl.getInstance();
+        productSubcategoryDao = ProductSubcategoryDaoImpl.getInstance();
     }
 
     public Dao<Integer, ProductCategory> getProductCategoryDao() {
@@ -44,5 +44,13 @@ public class DaoFactory {
 
     public Dao<Integer, ProductPhoto> getProductPhotoDao() {
         return productPhotoDao;
+    }
+
+    public Dao<Integer, Illustration> getIllustrationDao() {
+        return illustrationDao;
+    }
+
+    public Dao<Integer, ProductSubcategory> getProductSubcategoryDao() {
+        return productSubcategoryDao;
     }
 }

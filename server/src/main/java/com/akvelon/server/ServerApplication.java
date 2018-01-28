@@ -1,9 +1,7 @@
 package com.akvelon.server;
 
 import com.akvelon.server.dao.DaoFactory;
-import com.akvelon.server.model.Culture;
-import com.akvelon.server.model.ProductCategory;
-import com.akvelon.server.model.ProductPhoto;
+import com.akvelon.server.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -64,6 +62,47 @@ public class ServerApplication {
 
 
 		// =================== IllustrationDaoImpl testing ===========================
+		/*DaoFactory.getInstance().getIllustrationDao().getAll().forEach(System.out::println);
+		System.out.println(DaoFactory.getInstance().getIllustrationDao().read(3));
+		System.out.println(DaoFactory.getInstance().getIllustrationDao().readBy("IllustrationID", 3));
+
+		Illustration illustration = new Illustration();
+		Illustration illustration1 = new Illustration();
+		illustration.setDiagram("Diagram1");
+		illustration1.setDiagram("Diagram2");
+
+		DaoFactory.getInstance().getIllustrationDao().create(illustration);
+		DaoFactory.getInstance().getIllustrationDao().create(illustration1);
+
+		System.out.println(illustration1.getId() + " " + illustration1);
+
+		illustration1.setDiagram("Diagram2-1");
+		DaoFactory.getInstance().getIllustrationDao().update(illustration1);
+
+		DaoFactory.getInstance().getIllustrationDao().delete(illustration.getId());*/
+
+
+		// =================== ProductSubcategoryDaoImpl testing ===========================
+		DaoFactory.getInstance().getProductSubcategoryDao().getAll().forEach(System.out::println);
+		System.out.println(DaoFactory.getInstance().getProductSubcategoryDao().read(10));
+		System.out.println(DaoFactory.getInstance().getProductSubcategoryDao().readBy("Name", "Road Bikes"));
+
+		ProductSubcategory productSubcategory = new ProductSubcategory();
+		ProductSubcategory productSubcategory1 = new ProductSubcategory();
+		productSubcategory.setName("Home Bikes");
+		productSubcategory1.setName("New Bikes");
+		productSubcategory.setCategory(DaoFactory.getInstance().getProductCategoryDao().read(3));
+		productSubcategory1.setCategory(DaoFactory.getInstance().getProductCategoryDao().read(3));
+
+		DaoFactory.getInstance().getProductSubcategoryDao().create(productSubcategory);
+		DaoFactory.getInstance().getProductSubcategoryDao().create(productSubcategory1);
+
+		System.out.println(productSubcategory1.getId() + " " + productSubcategory);
+
+		productSubcategory1.setCategory(DaoFactory.getInstance().getProductCategoryDao().read(4));
+		DaoFactory.getInstance().getProductSubcategoryDao().update(productSubcategory1);
+
+		DaoFactory.getInstance().getProductSubcategoryDao().delete(productSubcategory.getId());
 
 
 	}
