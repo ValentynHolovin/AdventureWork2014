@@ -21,7 +21,8 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> {
     private ProductDescriptionDaoImpl productDescriptionDao;
 
     private final String SQL_INSERT = "INSERT INTO productmodel (Name, CatalogDescription, Instructions, rowguid) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
-    private final String SQL_UPDATE = "UPDATE productdescription SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductDescriptionID = ?";
+    private final String SQL_UPDATE = "UPDATE productmodel SET Name = ?, CatalogDescription = ?, Instructions = ?, rowguid = ? WHERE ProductModelID = ?";
+    private final String SQL_INSERT_PRODUCTMODELPRODUCTILLUSTRATION = "INSERT INTO productmodelillustration (ProductModelID, IllustrationID) values (?, ?) ON DUPLICATE KEY UPDATE IllustrationID = IllustrationID";
     private final String SQL_GET_ILLUSTRATIONS = "SELECT IllustrationID FROM productmodelillustration WHERE ProductModelID = ?";
     private final String SQL_GET_DESCRIPTIONS = "SELECT ProductDescriptionID FROM productmodelproductdescriptionculture WHERE ProductModelID = ?";
 
@@ -69,6 +70,17 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> {
     }
 
     @Override
+    public Integer create(ProductModel value) {
+        Integer id = super.create(value);
+
+        for (Illustration illustration : value.getIllustrations()) {
+
+        }
+
+        return id;
+    }
+
+    @Override
     protected RowMapper getRowMapper() {
         return rowMapper;
     }
@@ -77,12 +89,24 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> {
     protected PreparedStatement createInsertStatement(Connection connection, ProductModel value) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
 
-        return null;
+        ps.setString(1, value.getName());
+        ps.setString(2, value.getCatalogDescription());
+        ps.setString(3, value.getInstruction());
+        ps.setString(4, value.getRowguid());
+
+        return ps;
     }
 
     @Override
     protected PreparedStatement createUpdateStatement(Connection connection, ProductModel value) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(SQL_UPDATE);
-        return null;
+
+        ps.setString(1, value.getName());
+        ps.setString(2, value.getCatalogDescription());
+        ps.setString(3, value.getInstruction());
+        ps.setString(4, value.getRowguid());
+        ps.setInt(5, value.getId());
+
+        return ps;
     }
 }
