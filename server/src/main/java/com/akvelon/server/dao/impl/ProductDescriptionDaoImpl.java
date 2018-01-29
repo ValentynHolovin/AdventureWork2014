@@ -1,31 +1,29 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.dao.DaoFactory;
 import com.akvelon.server.dao.api.Dao;
 import com.akvelon.server.model.Culture;
 import com.akvelon.server.model.ProductDescription;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 @Repository
 public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> {
     private static ProductDescriptionDaoImpl productDescriptionDao;
     private static RowMapper<ProductDescription> rowMapper;
-    private Dao<String, Culture> cultureDao;
+    @Autowired
+    private CultureDaoImpl cultureDao;
 
-    private final String SQL_INSERT = "INSERT INTO productsubcategory (ProductCategoryID, Name, rowguid) values (?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
-    private final String SQL_UPDATE = "UPDATE productsubcategory SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductSubcategoryID = ?";
+    private final String SQL_INSERT = "INSERT INTO productdescription (Description, rowguid) values (?, ?) ON DUPLICATE KEY UPDATE Description = Description";
+    private final String SQL_UPDATE = "UPDATE productdescription SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductDescriptionID = ?";
+    private final String SQL_GET_CULTURE = "SELECT CultureID FROM productmodelproductdescriptionculture WHERE ProductDescriptionID = ?";
 
     protected ProductDescriptionDaoImpl() {
         super(new ProductDescription());
         if (productDescriptionDao == null) {
             productDescriptionDao = this;
-            cultureDao = DaoFactory.getInstance().getCultureDao();
 
             rowMapper = (ResultSet rs, int conNum) -> {
                 ProductDescription productDescription = new ProductDescription();
@@ -33,6 +31,8 @@ public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> {
                 productDescription.setId(rs.getInt("ProductDescriptionID"));
                 productDescription.setDescription(rs.getString("Description"));
                 productDescription.setRowguid(rs.getString("rowguid"));
+                Culture culture = cultureDao.read(this.jdbcTemplate.queryForObject(SQL_GET_CULTURE, new Object[] {productDescription.getId()}, String.class));
+                productDescription.setCulture(culture);
 
                 return productDescription;
             };
@@ -54,11 +54,22 @@ public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> {
 
     @Override
     protected PreparedStatement createInsertStatement(Connection connection, ProductDescription value) throws SQLException {
-        return null;
+        PreparedStatement ps = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+
+        ps.setString(1, value.getDescription());
+        ps.setString(2, value.getRowguid());
+
+        return ps;
     }
 
     @Override
     protected PreparedStatement createUpdateStatement(Connection connection, ProductDescription value) throws SQLException {
-        return null;
+        PreparedStatement ps = connection.prepareStatement(SQL_UPDATE);
+
+        ps.setString(1, value.getDescription());
+        ps.setString(2, value.getRowguid());
+        ps.setInt(3, value.getId());
+
+        return ps;
     }
 }

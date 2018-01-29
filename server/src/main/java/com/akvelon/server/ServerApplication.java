@@ -1,7 +1,7 @@
 package com.akvelon.server;
 
-import com.akvelon.server.dao.DaoFactory;
-import com.akvelon.server.model.*;
+import com.akvelon.server.dao.impl.ProductDescriptionDaoImpl;
+import com.akvelon.server.dao.impl.ProductModelDaoImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -83,7 +83,7 @@ public class ServerApplication {
 
 
 		// =================== ProductSubcategoryDaoImpl testing ===========================
-		DaoFactory.getInstance().getProductSubcategoryDao().getAll().forEach(System.out::println);
+		/*DaoFactory.getInstance().getProductSubcategoryDao().getAll().forEach(System.out::println);
 		System.out.println(DaoFactory.getInstance().getProductSubcategoryDao().read(10));
 		System.out.println(DaoFactory.getInstance().getProductSubcategoryDao().readBy("Name", "Road Bikes"));
 
@@ -102,7 +102,16 @@ public class ServerApplication {
 		productSubcategory1.setCategory(DaoFactory.getInstance().getProductCategoryDao().read(4));
 		DaoFactory.getInstance().getProductSubcategoryDao().update(productSubcategory1);
 
-		DaoFactory.getInstance().getProductSubcategoryDao().delete(productSubcategory.getId());
+		DaoFactory.getInstance().getProductSubcategoryDao().delete(productSubcategory.getId());*/
+
+
+		// =================== ProductDescriptionDaoImpl testing ===========================
+		/*ProductDescriptionDaoImpl.getInstance().getAll().forEach(System.out::println);
+		System.out.println(ProductDescriptionDaoImpl.getInstance().read(64));
+		System.out.println(ProductDescriptionDaoImpl.getInstance().readBy("rowguid", "301EED3A-1A82-4855-99CB-2AFE8290D641"));*/
+
+		// =================== ProductModelDaoImpl testing ===========================
+		ProductModelDaoImpl.getInstance().getAll().forEach(System.out::println);
 
 
 	}
