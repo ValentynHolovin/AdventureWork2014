@@ -28,7 +28,7 @@ public class ProductDaoImpl extends SuperDao<Product> {
     private final String SQL_INSERT = "INSERT INTO product (Name, ProductNumber, MakeFlag, FinishedGoodsFlag, Color, SafetyStockLevel, ReorderPoint, StandardCost, ListPrice, Size, SizeUnitMeasureCode, WeightUnitMeasureCode, Weight, DaysToManufacture, ProductLine, Class, Style, ProductSubcategoryID, ProductModelID, SellStartDate, SellEndDate, DiscontinuedDate, rowguid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE product SET Name = ?, ProductNumber = ?, MakeFlag = ?, FinishedGoodsFlag = ?, Color = ?, SafetyStockLevel = ?, ReorderPoint = ?, StandardCost = ?, ListPrice = ?, Size = ?, SizeUnitMeasureCode = ?, WeightUnitMeasureCode = ?, Weight = ?, DaysToManufacture = ?, ProductLine = ?, Class = ?, Style = ?, ProductSubcategoryID = ?, ProductModelID = ?, SellStartDate = ?, SellEndDate = ?, DiscontinuedDate = ?, rowguid = ? WHERE ProductID = ?";
     private final String SQL_GET_PRODUCTPHOTO = "SELECT ProductPhotoID FROM productproductphoto WHERE ProductID = ?";
-    private final String SQL_INSERT_PRODUCTPRODUCTPHOTO = "INSERT INTO productproductphoto (ProductID, ProductPhotoID)";
+    private final String SQL_INSERT_PRODUCTPRODUCTPHOTO = "INSERT INTO productproductphoto (ProductID, ProductPhotoID, Primary) values (?, ?, ?) ON DUPLICATE KEY UPDATE ProdectID = ProductID";
 
     protected ProductDaoImpl() {
         super(new Product());
@@ -90,7 +90,9 @@ public class ProductDaoImpl extends SuperDao<Product> {
     public Integer create(Product value) {
         Integer id = super.create(value);
 
-
+        for (ProductPhoto productPhoto : value.getProductPhotos()) {
+            this.jdbcTemplate.update(SQL_INSERT_PRODUCTPRODUCTPHOTO, value.getId(), productPhoto.getId(), 1);
+        }
 
         return id;
     }
