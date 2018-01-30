@@ -4,14 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Calendar;
+import java.sql.Date;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductReview extends Entity<Integer> {
+    private Integer productID;
     private String reviewerName;
-    private Calendar reviewDate;
+    private Date reviewDate;
     private String emailAddress;
     private Integer rating;
     private String comments;

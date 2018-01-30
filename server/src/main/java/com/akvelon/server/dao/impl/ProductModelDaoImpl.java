@@ -23,6 +23,7 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> {
     private final String SQL_INSERT = "INSERT INTO productmodel (Name, CatalogDescription, Instructions, rowguid) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productmodel SET Name = ?, CatalogDescription = ?, Instructions = ?, rowguid = ? WHERE ProductModelID = ?";
     private final String SQL_INSERT_PRODUCTMODELPRODUCTILLUSTRATION = "INSERT INTO productmodelillustration (ProductModelID, IllustrationID) values (?, ?) ON DUPLICATE KEY UPDATE IllustrationID = IllustrationID";
+    private final String SQL_INSERT_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE = "INSERT INTO productmodelproductdescriptionculture (ProductModelID, ProductDescriptionID, CultureID) valuse (?, ?, ?) ON DUPLICATE KEY UPDATE ProductDescriptionID = ProductDescriptionID";
     private final String SQL_GET_ILLUSTRATIONS = "SELECT IllustrationID FROM productmodelillustration WHERE ProductModelID = ?";
     private final String SQL_GET_DESCRIPTIONS = "SELECT ProductDescriptionID FROM productmodelproductdescriptionculture WHERE ProductModelID = ?";
 
@@ -74,7 +75,11 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> {
         Integer id = super.create(value);
 
         for (Illustration illustration : value.getIllustrations()) {
+            this.jdbcTemplate.update(SQL_INSERT_PRODUCTMODELPRODUCTILLUSTRATION, value.getId(), illustration.getId());
+        }
 
+        for (ProductDescription productDescription : value.getProductDescriptions()) {
+            this.jdbcTemplate.update(SQL_INSERT_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE, value.getId(), productDescription.getId(), productDescription.getCulture().getId());
         }
 
         return id;

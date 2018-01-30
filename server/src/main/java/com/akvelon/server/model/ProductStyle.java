@@ -1,5 +1,8 @@
 package com.akvelon.server.model;
 
+import lombok.Getter;
+
+@Getter
 public enum ProductStyle {
     W("Women's"),
     M("Men's"),

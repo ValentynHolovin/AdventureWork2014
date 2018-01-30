@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductWeight {
-    private Double weight;
-    private String weightUnitMeasureCode;
+public class UnitMeasure extends Entity<String> {
+    private String name;
 }

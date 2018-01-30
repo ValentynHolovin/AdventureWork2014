@@ -2,13 +2,12 @@ package com.akvelon.server.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.Calendar;
+import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Product extends Entity<Integer> {
     private String name;
@@ -21,16 +20,23 @@ public class Product extends Entity<Integer> {
     private Double standardCost;
     private Double listPrice;
     private Integer daysToManufacture;
-    private ProductSize productSize;
-    private ProductWeight productWeight;
+    private String size;
+    private UnitMeasure sizeUnitMeasureCode;
+    private UnitMeasure weightUnitMeasureCode;
+    private Double weight;
     private ProductLine productLine;
     private ProductClass productClass;
     private ProductStyle productStyle;
     private ProductSubcategory productSubcategory;
     private ProductModel productModel;
-    private Calendar sellStartDate;
-    private Calendar sellEndDate;
-    private Calendar discontinuedDate;
+    private Date sellStartDate;
+    private Date sellEndDate;
+    private Date discontinuedDate;
     private List<ProductPhoto> productPhotos;
     private List<ProductReview> productReviews;
+    private String rowguid;
+
+    public Product() {
+        this.rowguid = UUID.randomUUID().toString().toUpperCase();
+    }
 }
