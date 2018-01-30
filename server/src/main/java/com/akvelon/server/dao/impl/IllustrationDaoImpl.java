@@ -1,13 +1,14 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.model.Illustration;
+import com.akvelon.server.dao.api.IllustrationDao;
+import com.akvelon.server.domain.Illustration;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
 @Repository
-public class IllustrationDaoImpl extends SuperDao<Illustration> {
+public class IllustrationDaoImpl extends SuperDao<Illustration> implements IllustrationDao {
     private static IllustrationDaoImpl illustrationDao;
     private static RowMapper<Illustration> rowMapper;
 

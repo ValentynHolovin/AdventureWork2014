@@ -1,13 +1,14 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.model.ProductPhoto;
+import com.akvelon.server.dao.api.ProductPhotoDao;
+import com.akvelon.server.domain.ProductPhoto;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
 @Repository
-public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> {
+public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements ProductPhotoDao {
     private static ProductPhotoDaoImpl productPhotoDao;
     private static RowMapper<ProductPhoto> rowMapper;
 

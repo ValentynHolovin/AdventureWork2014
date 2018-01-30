@@ -1,13 +1,14 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.model.UnitMeasure;
+import com.akvelon.server.dao.api.UnitMeasureDao;
+import com.akvelon.server.domain.UnitMeasure;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
 @Repository
-public class UnitMeasureDaoImpl extends SuperStringDao<UnitMeasure> {
+public class UnitMeasureDaoImpl extends SuperStringDao<UnitMeasure> implements UnitMeasureDao {
     private static UnitMeasureDaoImpl unitMeasureDao;
     private static RowMapper<UnitMeasure> rowMapper;
 

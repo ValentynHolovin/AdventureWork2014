@@ -1,6 +1,7 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.model.*;
+import com.akvelon.server.dao.api.*;
+import com.akvelon.server.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -10,20 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ProductDaoImpl extends SuperDao<Product> {
+public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
     private static ProductDaoImpl productDao;
     private static RowMapper<Product> rowMapper;
 
     @Autowired
-    private ProductPhotoDaoImpl productPhotoDao;
+    private ProductPhotoDao productPhotoDao;
     @Autowired
-    private UnitMeasureDaoImpl unitMeasureDao;
+    private UnitMeasureDao unitMeasureDao;
     @Autowired
-    private ProductSubcategoryDaoImpl productSubcategoryDao;
+    private ProductSubcategoryDao productSubcategoryDao;
     @Autowired
-    private ProductModelDaoImpl productModelDao;
+    private ProductModelDao productModelDao;
     @Autowired
-    private ProductReviewDaoImpl productReviewDao;
+    private ProductReviewDao productReviewDao;
 
     private final String SQL_INSERT = "INSERT INTO product (Name, ProductNumber, MakeFlag, FinishedGoodsFlag, Color, SafetyStockLevel, ReorderPoint, StandardCost, ListPrice, Size, SizeUnitMeasureCode, WeightUnitMeasureCode, Weight, DaysToManufacture, ProductLine, Class, Style, ProductSubcategoryID, ProductModelID, SellStartDate, SellEndDate, DiscontinuedDate, rowguid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE product SET Name = ?, ProductNumber = ?, MakeFlag = ?, FinishedGoodsFlag = ?, Color = ?, SafetyStockLevel = ?, ReorderPoint = ?, StandardCost = ?, ListPrice = ?, Size = ?, SizeUnitMeasureCode = ?, WeightUnitMeasureCode = ?, Weight = ?, DaysToManufacture = ?, ProductLine = ?, Class = ?, Style = ?, ProductSubcategoryID = ?, ProductModelID = ?, SellStartDate = ?, SellEndDate = ?, DiscontinuedDate = ?, rowguid = ? WHERE ProductID = ?";
@@ -84,6 +85,16 @@ public class ProductDaoImpl extends SuperDao<Product> {
         }
 
         return productDao;
+    }
+
+    @Override
+    public List<Product> getTopFive() {
+        return null;
+    }
+
+    @Override
+    public List<Product> searchProduct(String searchRequest) {
+        return null;
     }
 
     @Override

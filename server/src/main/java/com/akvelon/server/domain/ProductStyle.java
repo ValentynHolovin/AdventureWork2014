@@ -1,4 +1,4 @@
-package com.akvelon.server.model;
+package com.akvelon.server.domain;
 
 import lombok.Getter;
 

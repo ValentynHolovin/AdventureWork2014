@@ -1,8 +1,11 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.model.Illustration;
-import com.akvelon.server.model.ProductDescription;
-import com.akvelon.server.model.ProductModel;
+import com.akvelon.server.dao.api.IllustrationDao;
+import com.akvelon.server.dao.api.ProductDescriptionDao;
+import com.akvelon.server.dao.api.ProductModelDao;
+import com.akvelon.server.domain.Illustration;
+import com.akvelon.server.domain.ProductDescription;
+import com.akvelon.server.domain.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -12,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ProductModelDaoImpl extends SuperDao<ProductModel> {
+public class ProductModelDaoImpl extends SuperDao<ProductModel> implements ProductModelDao {
     private static ProductModelDaoImpl productModelDao;
     private static RowMapper<ProductModel> rowMapper;
     @Autowired
-    private IllustrationDaoImpl illustrationDao;
+    private IllustrationDao illustrationDao;
     @Autowired
-    private ProductDescriptionDaoImpl productDescriptionDao;
+    private ProductDescriptionDao productDescriptionDao;
 
     private final String SQL_INSERT = "INSERT INTO productmodel (Name, CatalogDescription, Instructions, rowguid) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productmodel SET Name = ?, CatalogDescription = ?, Instructions = ?, rowguid = ? WHERE ProductModelID = ?";

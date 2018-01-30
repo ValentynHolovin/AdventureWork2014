@@ -1,6 +1,7 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.model.Culture;
+import com.akvelon.server.dao.api.CultureDao;
+import com.akvelon.server.domain.Culture;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 
 
 @Repository
-public class CultureDaoImpl extends SuperStringDao<Culture> {
+public class CultureDaoImpl extends SuperStringDao<Culture> implements CultureDao {
     private static CultureDaoImpl cultureDao;
     private static RowMapper<Culture> rowMapper;
 

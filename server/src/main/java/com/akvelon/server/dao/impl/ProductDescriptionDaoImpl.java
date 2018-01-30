@@ -1,8 +1,9 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.dao.api.Dao;
-import com.akvelon.server.model.Culture;
-import com.akvelon.server.model.ProductDescription;
+import com.akvelon.server.dao.api.CultureDao;
+import com.akvelon.server.dao.api.ProductDescriptionDao;
+import com.akvelon.server.domain.Culture;
+import com.akvelon.server.domain.ProductDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 
 @Repository
-public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> {
+public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> implements ProductDescriptionDao {
     private static ProductDescriptionDaoImpl productDescriptionDao;
     private static RowMapper<ProductDescription> rowMapper;
     @Autowired
-    private CultureDaoImpl cultureDao;
+    private CultureDao cultureDao;
 
     private final String SQL_INSERT = "INSERT INTO productdescription (Description, rowguid) values (?, ?) ON DUPLICATE KEY UPDATE Description = Description";
     private final String SQL_UPDATE = "UPDATE productdescription SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductDescriptionID = ?";

@@ -1,6 +1,7 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.model.ProductCategory;
+import com.akvelon.server.dao.api.ProductCategoryDao;
+import com.akvelon.server.domain.ProductCategory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +9,7 @@ import java.sql.*;
 
 
 @Repository
-public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> {
+public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements ProductCategoryDao {
     private static ProductCategoryDaoImpl productCategoryDao;
     private static RowMapper<ProductCategory> rowMapper;
 

@@ -1,13 +1,14 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.model.ProductReview;
+import com.akvelon.server.dao.api.ProductReviewDao;
+import com.akvelon.server.domain.ProductReview;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
 @Repository
-public class ProductReviewDaoImpl extends SuperDao<ProductReview> {
+public class ProductReviewDaoImpl extends SuperDao<ProductReview> implements ProductReviewDao {
     private static ProductReviewDaoImpl productReviewDao;
     private static RowMapper<ProductReview> rowMapper;
 

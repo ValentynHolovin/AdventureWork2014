@@ -111,7 +111,7 @@ public class ServerApplication {
 		System.out.println(ProductDescriptionDaoImpl.getInstance().readBy("rowguid", "301EED3A-1A82-4855-99CB-2AFE8290D641"));*/
 
 		// =================== ProductModelDaoImpl testing ===========================
-		ProductModelDaoImpl.getInstance().getAll().forEach(System.out::println);
+		//ProductModelDaoImpl.getInstance().getAll().forEach(System.out::println);
 
 
 	}

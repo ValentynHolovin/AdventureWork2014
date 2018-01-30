@@ -1,7 +1,7 @@
 package com.akvelon.server.dao.impl;
 
 import com.akvelon.server.dao.api.Dao;
-import com.akvelon.server.model.Entity;
+import com.akvelon.server.domain.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

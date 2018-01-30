@@ -1,8 +1,8 @@
 package com.akvelon.server.dao.impl;
 
-import com.akvelon.server.dao.api.Dao;
-import com.akvelon.server.model.ProductCategory;
-import com.akvelon.server.model.ProductSubcategory;
+import com.akvelon.server.dao.api.ProductCategoryDao;
+import com.akvelon.server.dao.api.ProductSubcategoryDao;
+import com.akvelon.server.domain.ProductSubcategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 
 @Repository
-public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> {
+public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> implements ProductSubcategoryDao {
     private static ProductSubcategoryDaoImpl productSubcategoryDao;
     private static RowMapper<ProductSubcategory> rowMapper;
     @Autowired
-    private ProductCategoryDaoImpl productCategoryDao;
+    private ProductCategoryDao productCategoryDao;
 
     private final String SQL_INSERT = "INSERT INTO productsubcategory (ProductCategoryID, Name, rowguid) values (?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productsubcategory SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductSubcategoryID = ?";
