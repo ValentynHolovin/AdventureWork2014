@@ -10,8 +10,8 @@ import java.sql.Blob;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductPhoto extends Entity<Integer> {
-    private Blob thumbNailPhoto;
+    private byte[] thumbNailPhoto;
     private String thumbnailPhotoFileName;
-    private Blob largePhoto;
+    private byte[] largePhoto;
     private String largePhotoFileName;
 }

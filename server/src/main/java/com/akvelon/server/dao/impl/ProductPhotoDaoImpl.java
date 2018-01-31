@@ -5,6 +5,7 @@ import com.akvelon.server.domain.ProductPhoto;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 
 @Repository
@@ -24,9 +25,9 @@ public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements Produ
                 ProductPhoto productPhoto = new ProductPhoto();
 
                 productPhoto.setId(rs.getInt("ProductPhotoID"));
-                productPhoto.setThumbNailPhoto(rs.getBlob("ThumbNailPhoto"));
+                productPhoto.setThumbNailPhoto(rs.getBlob("ThumbNailPhoto").getBytes(1, (int)rs.getBlob("ThumbNailPhoto").length()));
                 productPhoto.setThumbnailPhotoFileName(rs.getString("ThumbnailPhotoFileName"));
-                productPhoto.setLargePhoto(rs.getBlob("LargePhoto"));
+                productPhoto.setLargePhoto(rs.getBlob("LargePhoto").getBytes(1, (int)rs.getBlob("LargePhoto").length()));
                 productPhoto.setLargePhotoFileName(rs.getString("LargePhotoFileName"));
 
                 return productPhoto;
@@ -51,9 +52,9 @@ public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements Produ
     protected PreparedStatement createInsertStatement(Connection connection, ProductPhoto value) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
 
-        ps.setBlob(1, value.getThumbNailPhoto());
+        ps.setBlob(1, new SerialBlob(value.getThumbNailPhoto()));
         ps.setString(2, value.getLargePhotoFileName());
-        ps.setBlob(3, value.getLargePhoto());
+        ps.setBlob(3, new SerialBlob(value.getLargePhoto()));
         ps.setString(4, value.getLargePhotoFileName());
 
         return ps;
@@ -63,9 +64,9 @@ public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements Produ
     protected PreparedStatement createUpdateStatement(Connection connection, ProductPhoto value) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(SQL_UPDATE);
 
-        ps.setBlob(1, value.getThumbNailPhoto());
+        ps.setBlob(1, new SerialBlob(value.getThumbNailPhoto()));
         ps.setString(2, value.getLargePhotoFileName());
-        ps.setBlob(3, value.getLargePhoto());
+        ps.setBlob(3, new SerialBlob(value.getLargePhoto()));
         ps.setString(4, value.getLargePhotoFileName());
         ps.setInt(5, value.getId());
 

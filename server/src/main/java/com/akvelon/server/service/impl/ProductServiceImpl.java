@@ -62,6 +62,6 @@ public class ProductServiceImpl extends SuperService<Product> implements Product
 
     @Override
     public List<Product> searchProduct(String searchRequest) {
-        return productService.searchProduct(searchRequest);
+        return productDao.searchProduct(searchRequest);
     }
 }

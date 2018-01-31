@@ -1,6 +1,5 @@
 package com.akvelon.server.service.impl;
 
-import com.akvelon.server.dao.api.Dao;
 import com.akvelon.server.dao.api.ProductReviewDao;
 import com.akvelon.server.domain.ProductReview;
 import com.akvelon.server.service.api.ProductReviewService;

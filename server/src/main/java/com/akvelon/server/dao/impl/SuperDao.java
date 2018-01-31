@@ -72,7 +72,7 @@ public abstract class SuperDao<V extends Entity<Integer>> implements Dao<Integer
     public <T> V readBy(String fieldName, T value) {
         List<V> result = readAllBy(fieldName, value);
 
-        if (result == null) {
+        if (result == null || result.size() == 0) {
             return null;
         }
 

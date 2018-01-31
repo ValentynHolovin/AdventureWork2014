@@ -30,6 +30,12 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
     private final String SQL_UPDATE = "UPDATE product SET Name = ?, ProductNumber = ?, MakeFlag = ?, FinishedGoodsFlag = ?, Color = ?, SafetyStockLevel = ?, ReorderPoint = ?, StandardCost = ?, ListPrice = ?, Size = ?, SizeUnitMeasureCode = ?, WeightUnitMeasureCode = ?, Weight = ?, DaysToManufacture = ?, ProductLine = ?, Class = ?, Style = ?, ProductSubcategoryID = ?, ProductModelID = ?, SellStartDate = ?, SellEndDate = ?, DiscontinuedDate = ?, rowguid = ? WHERE ProductID = ?";
     private final String SQL_GET_PRODUCTPHOTO = "SELECT ProductPhotoID FROM productproductphoto WHERE ProductID = ?";
     private final String SQL_INSERT_PRODUCTPRODUCTPHOTO = "INSERT INTO productproductphoto (ProductID, ProductPhotoID, Primary) values (?, ?, ?) ON DUPLICATE KEY UPDATE ProdectID = ProductID";
+    private final String SQL_SEARCH = "SELECT * FROM product WHERE Name LIKE \"%%%s%%\"";
+    private final String SQL_GET_TOP_FIVE = "SELECT *, COUNT(*) FROM product AS t1\n" +
+            "LEFT JOIN transactionhistoryarchive AS t2 ON t1.ProductID = t2.ProductID AND t2.TransactionType = 'S' \n" +
+            "LEFT JOIN productsubcategory AS t3 ON t1.ProductSubcategoryID = t3.ProductSubcategoryID \n" +
+            "WHERE t3.ProductCategoryID = 1\n" +
+            "GROUP BY t1.ProductID ORDER BY COUNT(*) DESC LIMIT 5";
 
     protected ProductDaoImpl() {
         super(new Product());
@@ -54,9 +60,9 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
                 product.setWeightUnitMeasureCode(unitMeasureDao.read(rs.getString("WeightUnitMeasureCode")));
                 product.setWeight(rs.getDouble("Weight"));
                 product.setDaysToManufacture(rs.getInt("DaysToManufacture"));
-                product.setProductLine(ProductLine.valueOf(rs.getString("ProductLine")));
-                product.setProductClass(ProductClass.valueOf(rs.getString("Class")));
-                product.setProductStyle(ProductStyle.valueOf(rs.getString("Style")));
+                product.setProductLine(rs.getString("ProductLine") == null ? null : ProductLine.valueOf(rs.getString("ProductLine")));
+                product.setProductClass(rs.getString("Class") == null ? null : ProductClass.valueOf(rs.getString("Class")));
+                product.setProductStyle(rs.getString("Style") == null ? null : ProductStyle.valueOf(rs.getString("Style")));
                 product.setProductSubcategory(productSubcategoryDao.read(rs.getInt("ProductSubcategoryID")));
                 product.setProductModel(productModelDao.read(rs.getInt("ProductModelID")));
                 product.setSellStartDate(rs.getDate("SellStartDate"));
@@ -89,12 +95,13 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
 
     @Override
     public List<Product> getTopFive() {
-        return null;
+        return jdbcTemplate.query(SQL_GET_TOP_FIVE, getRowMapper());
     }
 
     @Override
     public List<Product> searchProduct(String searchRequest) {
-        return null;
+        String sql = String.format(SQL_SEARCH, searchRequest);
+        return jdbcTemplate.query(sql, getRowMapper());
     }
 
     @Override

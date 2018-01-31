@@ -65,7 +65,7 @@ public abstract class SuperStringDao<V extends Entity<String>> implements Dao<St
     public <T> V readBy(String fieldName, T value) {
         List<V> result = readAllBy(fieldName, value);
 
-        if (result == null) {
+        if (result == null || result.size() == 0) {
             return null;
         }
 

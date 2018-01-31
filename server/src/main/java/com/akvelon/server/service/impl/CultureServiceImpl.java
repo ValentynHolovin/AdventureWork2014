@@ -1,14 +1,10 @@
 package com.akvelon.server.service.impl;
 
 import com.akvelon.server.dao.api.CultureDao;
-import com.akvelon.server.dao.api.Dao;
-import com.akvelon.server.dao.impl.CultureDaoImpl;
 import com.akvelon.server.domain.Culture;
 import com.akvelon.server.service.api.CultureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service

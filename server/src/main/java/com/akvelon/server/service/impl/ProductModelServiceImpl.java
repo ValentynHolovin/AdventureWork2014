@@ -3,8 +3,6 @@ package com.akvelon.server.service.impl;
 import com.akvelon.server.dao.api.IllustrationDao;
 import com.akvelon.server.dao.api.ProductDescriptionDao;
 import com.akvelon.server.dao.api.ProductModelDao;
-import com.akvelon.server.domain.Illustration;
-import com.akvelon.server.domain.ProductDescription;
 import com.akvelon.server.domain.ProductModel;
 import com.akvelon.server.service.api.ProductModelService;
 import org.springframework.beans.factory.annotation.Autowired;
