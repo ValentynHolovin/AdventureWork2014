@@ -7,13 +7,13 @@ import com.akvelon.server.service.api.Service;
 import java.util.List;
 
 @org.springframework.stereotype.Service
-public abstract class SuperService<V extends Entity<Integer>> implements Service<Integer, V> {
-    protected Dao<Integer, V> dao;
+public abstract class SuperStringService<V extends Entity<String>> implements Service<String, V> {
+    protected Dao<String, V> dao;
 
-    public SuperService() {
+    public SuperStringService() {
     }
 
-    public SuperService(Dao<Integer, V> dao) {
+    public SuperStringService(Dao<String, V> dao) {
         this.dao = dao;
     }
 
@@ -23,12 +23,12 @@ public abstract class SuperService<V extends Entity<Integer>> implements Service
     }
 
     @Override
-    public Integer create(V value) {
+    public String create(V value) {
         return dao.create(value);
     }
 
     @Override
-    public V read(Integer key) {
+    public V read(String key) {
         return dao.read(key);
     }
 
@@ -38,7 +38,7 @@ public abstract class SuperService<V extends Entity<Integer>> implements Service
     }
 
     @Override
-    public void delete(Integer key) {
+    public void delete(String key) {
         dao.delete(key);
     }
 

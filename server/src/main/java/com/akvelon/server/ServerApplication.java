@@ -2,6 +2,8 @@ package com.akvelon.server;
 
 import com.akvelon.server.dao.impl.ProductDescriptionDaoImpl;
 import com.akvelon.server.dao.impl.ProductModelDaoImpl;
+import com.akvelon.server.service.api.ProductCategoryService;
+import com.akvelon.server.service.impl.ProductCategoryServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -112,6 +114,11 @@ public class ServerApplication {
 
 		// =================== ProductModelDaoImpl testing ===========================
 		//ProductModelDaoImpl.getInstance().getAll().forEach(System.out::println);
+
+
+		// =================== ProductCategoryServiceImpl testing ===========================
+		/*ProductCategoryService productCategoryService = ProductCategoryServiceImpl.getInstance();
+		productCategoryService.getAll().forEach(System.out::println);*/
 
 
 	}
