@@ -3,6 +3,7 @@ package com.akvelon.server.dao.api;
 import java.util.List;
 
 public interface Dao<K, V> {
+
     List<V> getAll();
 
     K create(V value);

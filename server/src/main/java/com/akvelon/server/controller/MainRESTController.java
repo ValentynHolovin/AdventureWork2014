@@ -19,6 +19,7 @@ public class MainRESTController {
         return "index.html";
     }
 
+    @Deprecated
     @RequestMapping(value = "/get_all")
     public List<Product> getAllProduct() {
         return productService.getAll();

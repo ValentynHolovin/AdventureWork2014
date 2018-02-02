@@ -12,7 +12,7 @@ public class CultureServiceImpl extends SuperStringService<Culture> implements C
     private static CultureServiceImpl cultureService;
 
     @Autowired
-    public CultureServiceImpl(CultureDao dao) {
+    protected CultureServiceImpl(CultureDao dao) {
         super(dao);
 
         if (cultureService == null) {
