@@ -36,14 +36,6 @@ public class ProductReviewDaoImpl extends SuperDao<ProductReview> implements Pro
         }
     }
 
-    public static synchronized ProductReviewDaoImpl getInstance() {
-        if (productReviewDao == null) {
-            productReviewDao = new ProductReviewDaoImpl();
-        }
-
-        return productReviewDao;
-    }
-
     @Override
     protected RowMapper getRowMapper() {
         return rowMapper;

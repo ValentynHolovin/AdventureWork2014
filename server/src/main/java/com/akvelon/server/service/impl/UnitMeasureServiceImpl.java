@@ -16,8 +16,4 @@ public class UnitMeasureServiceImpl extends SuperStringService<UnitMeasure> impl
             unitMeasureService = this;
         }
     }
-
-    public static synchronized UnitMeasureServiceImpl getInstance() {
-        return unitMeasureService;
-    }
 }

@@ -65,14 +65,6 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
         }
     }
 
-    public static synchronized ProductModelDaoImpl getInstance() {
-        if (productModelDao == null) {
-            productModelDao = new ProductModelDaoImpl();
-        }
-
-        return productModelDao;
-    }
-
     @Override
     public Integer create(ProductModel value) {
         Integer id = super.create(value);

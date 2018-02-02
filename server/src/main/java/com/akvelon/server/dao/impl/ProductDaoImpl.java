@@ -85,14 +85,6 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
         }
     }
 
-    public static synchronized ProductDaoImpl getInstance() {
-        if(productDao == null) {
-            productDao = new ProductDaoImpl();
-        }
-
-        return productDao;
-    }
-
     @Override
     public List<Product> getTopFive() {
         return jdbcTemplate.query(SQL_GET_TOP_FIVE, getRowMapper());

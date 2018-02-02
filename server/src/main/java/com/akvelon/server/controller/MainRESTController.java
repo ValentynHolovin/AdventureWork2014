@@ -1,6 +1,8 @@
 package com.akvelon.server.controller;
 
 import com.akvelon.server.domain.Product;
+import com.akvelon.server.domain.ProductModel;
+import com.akvelon.server.service.api.ProductModelService;
 import com.akvelon.server.service.api.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,8 @@ import java.util.List;
 public class MainRESTController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductModelService productModelService;
 
     @RequestMapping(value = "/")
     public String index() {
@@ -33,5 +37,9 @@ public class MainRESTController {
     @RequestMapping(value = "/get_top_five")
     public List<Product> getTopFive() {
         return productService.getTopFive();
+    }
+    @RequestMapping(value = "/test")
+    public List<ProductModel> test() {
+        return productModelService.getAll();
     }
 }

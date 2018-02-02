@@ -35,14 +35,6 @@ public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements Produ
         }
     }
 
-    public static synchronized ProductPhotoDaoImpl getInstance() {
-        if (productPhotoDao == null) {
-            productPhotoDao = new ProductPhotoDaoImpl();
-        }
-
-        return productPhotoDao;
-    }
-
     @Override
     protected RowMapper getRowMapper() {
         return rowMapper;

@@ -17,8 +17,4 @@ public class ProductSubcategoryServiceImpl extends SuperService<ProductSubcatego
             productSubcategoryService = this;
         }
     }
-
-    public static synchronized ProductSubcategoryServiceImpl getInstance() {
-        return productSubcategoryService;
-    }
 }

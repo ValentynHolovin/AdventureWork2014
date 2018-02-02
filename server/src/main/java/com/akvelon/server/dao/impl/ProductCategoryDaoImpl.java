@@ -33,14 +33,6 @@ public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements
         }
     }
 
-    public static synchronized ProductCategoryDaoImpl getInstance() {
-        if (productCategoryDao == null) {
-            productCategoryDao = new ProductCategoryDaoImpl();
-        }
-
-        return productCategoryDao;
-    }
-
     @Override
     protected RowMapper getRowMapper() {
         return rowMapper;

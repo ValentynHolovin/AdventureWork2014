@@ -31,14 +31,6 @@ public class UnitMeasureDaoImpl extends SuperStringDao<UnitMeasure> implements U
         }
     }
 
-    public static synchronized UnitMeasureDaoImpl getInstance() {
-        if (unitMeasureDao == null) {
-            unitMeasureDao = new UnitMeasureDaoImpl();
-        }
-
-        return unitMeasureDao;
-    }
-
     @Override
     public UnitMeasure read(String key) {
         return readBy("UnitMeasureCode", key);

@@ -17,16 +17,13 @@ public class ProductModelServiceImpl extends SuperService<ProductModel> implemen
     @Autowired
     private ProductDescriptionDao productDescriptionDao;
 
+
     @Autowired
     protected ProductModelServiceImpl(ProductModelDao dao) {
         super(dao);
         if (productModelService == null) {
             productModelService = this;
         }
-    }
-
-    public static synchronized ProductModelServiceImpl getInstance() {
-        return productModelService;
     }
 
     @Override
@@ -51,7 +48,7 @@ public class ProductModelServiceImpl extends SuperService<ProductModel> implemen
             }
         }
         for (int i = 0; i < value.getProductDescriptions().size(); i++) {
-            if (value.getProductDescriptions().get(i) != null) {
+            if (value.getProductDescriptions().get(i).getId() != null) {
                 productDescriptionDao.update(value.getProductDescriptions().get(i));
             } else {
                 productDescriptionDao.create(value.getProductDescriptions().get(i));

@@ -35,14 +35,6 @@ public class CultureDaoImpl extends SuperStringDao<Culture> implements CultureDa
         }
     }
 
-    public static synchronized CultureDaoImpl getInstance() {
-        if (cultureDao == null) {
-            cultureDao = new CultureDaoImpl();
-        }
-
-        return cultureDao;
-    }
-
     @Override
     protected RowMapper getRowMapper() {
         return rowMapper;

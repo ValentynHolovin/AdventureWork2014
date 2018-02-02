@@ -40,14 +40,6 @@ public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> impl
         }
     }
 
-    public static synchronized ProductDescriptionDaoImpl getInstance() {
-        if (productDescriptionDao == null) {
-            productDescriptionDao = new ProductDescriptionDaoImpl();
-        }
-
-        return productDescriptionDao;
-    }
-
     @Override
     protected RowMapper getRowMapper() {
         return rowMapper;

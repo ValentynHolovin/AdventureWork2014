@@ -17,8 +17,4 @@ public class ProductReviewServiceImpl extends SuperService<ProductReview> implem
             productReviewService = this;
         }
     }
-
-    public static synchronized ProductReviewServiceImpl getInstance() {
-        return productReviewService;
-    }
 }

@@ -31,14 +31,6 @@ public class IllustrationDaoImpl extends SuperDao<Illustration> implements Illus
         }
     }
 
-    public static synchronized IllustrationDaoImpl getInstance() {
-        if (illustrationDao == null) {
-            illustrationDao = new IllustrationDaoImpl();
-        }
-
-        return illustrationDao;
-    }
-
     @Override
     protected RowMapper getRowMapper() {
         return rowMapper;

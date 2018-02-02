@@ -25,10 +25,6 @@ public class ProductServiceImpl extends SuperService<Product> implements Product
         }
     }
 
-    public static synchronized ProductServiceImpl getInstance() {
-        return productService;
-    }
-
     @Override
     public Integer create(Product value) {
         if (value.getProductPhotos().size() == 0) {

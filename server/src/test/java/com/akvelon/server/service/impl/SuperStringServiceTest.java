@@ -7,27 +7,28 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class CultureServiceImplTest {
+public class SuperStringServiceTest {
 
     @Mock
     private CultureDao cultureDao;
     @InjectMocks
-    private CultureServiceImpl cultureService;
+    private SuperStringService<Culture> cultureSuperStringService = new CultureServiceImpl(cultureDao);
     private Culture culture;
     private List<Culture> cultures;
 
     @Before
-    public void initCulture() {
+    public void setUp() throws Exception {
         cultures = new ArrayList<>();
         Culture culture1 = new Culture();
         culture = new Culture();
@@ -43,26 +44,12 @@ public class CultureServiceImplTest {
     }
 
     @Test
-    public void getAll() {
-        // given
-        when(cultureDao.getAll()).thenReturn(cultures);
-
-        // do
-        List<Culture> cultureList = cultureService.getAll();
-
-        // verify
-        verify(cultureDao, times(1)).getAll();
-        assertEquals(cultures, cultureList);
-
-    }
-
-    @Test
     public void create() {
         // given
         when(cultureDao.create(culture)).thenReturn("UA");
 
         // do
-        String cultureID = cultureService.create(culture);
+        String cultureID = cultureSuperStringService.create(culture);
 
         // verify
         verify(cultureDao, times(1)).create(culture);
@@ -76,7 +63,7 @@ public class CultureServiceImplTest {
         when(cultureDao.read("UA")).thenReturn(culture);
 
         // do
-        Culture culture1 = cultureService.read("UA");
+        Culture culture1 = cultureSuperStringService.read("UA");
 
         // verify
         verify(cultureDao, times(1)).read("UA");
@@ -87,7 +74,7 @@ public class CultureServiceImplTest {
     @Test
     public void update() {
         // do
-        cultureService.update(culture);
+        cultureSuperStringService.update(culture);
 
         // verify
         verify(cultureDao, times(1)).update(culture);
@@ -96,7 +83,7 @@ public class CultureServiceImplTest {
     @Test
     public void delete() {
         // do
-        cultureService.delete("UA");
+        cultureSuperStringService.delete("UA");
 
         // verify
         verify(cultureDao, times(1)).delete("UA");
@@ -108,7 +95,7 @@ public class CultureServiceImplTest {
         when(cultureDao.readBy("CultureID", "UA")).thenReturn(culture);
 
         // do
-        Culture culture1 = cultureService.readBy("CultureID", "UA");
+        Culture culture1 = cultureSuperStringService.readBy("CultureID", "UA");
 
         // verify
         verify(cultureDao, times(1)).readBy("CultureID", "UA");
@@ -122,7 +109,7 @@ public class CultureServiceImplTest {
         when(cultureDao.readAllBy("CultureID", "UA")).thenReturn(cultures);
 
         // do
-        List<Culture> cultureList = cultureService.readAllBy("CultureID", "UA");
+        List<Culture> cultureList = cultureSuperStringService.readAllBy("CultureID", "UA");
 
         // verify
         verify(cultureDao, times(1)).readAllBy("CultureID", "UA");

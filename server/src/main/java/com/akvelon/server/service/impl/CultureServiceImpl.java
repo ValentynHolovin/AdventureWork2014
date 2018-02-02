@@ -19,8 +19,4 @@ public class CultureServiceImpl extends SuperStringService<Culture> implements C
             cultureService = this;
         }
     }
-
-    public static synchronized CultureServiceImpl getInstance() {
-        return cultureService;
-    }
 }
