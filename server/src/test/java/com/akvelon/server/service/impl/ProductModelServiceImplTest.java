@@ -3,18 +3,17 @@ package com.akvelon.server.service.impl;
 import com.akvelon.server.dao.api.IllustrationDao;
 import com.akvelon.server.dao.api.ProductDescriptionDao;
 import com.akvelon.server.dao.api.ProductModelDao;
-import com.akvelon.server.dao.impl.IllustrationDaoImpl;
-import com.akvelon.server.dao.impl.ProductDescriptionDaoImpl;
-import com.akvelon.server.dao.impl.ProductModelDaoImpl;
 import com.akvelon.server.domain.Culture;
 import com.akvelon.server.domain.Illustration;
 import com.akvelon.server.domain.ProductDescription;
 import com.akvelon.server.domain.ProductModel;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +22,18 @@ import java.util.UUID;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 public class ProductModelServiceImplTest {
 
     @Mock
-    private ProductModelDaoImpl productModelDao;
+    private ProductModelDao productModelDao;
     @Mock
-    private IllustrationDaoImpl illustrationDao;
+    private IllustrationDao illustrationDao;
     @Mock
-    private ProductDescriptionDaoImpl productDescriptionDao;
+    private ProductDescriptionDao productDescriptionDao;
     @InjectMocks
     private ProductModelServiceImpl productModelService;
+
     private ProductModel productModel;
     private Illustration illustration;
     private Illustration illustration1;

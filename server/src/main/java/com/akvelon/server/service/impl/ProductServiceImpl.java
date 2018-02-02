@@ -1,5 +1,6 @@
 package com.akvelon.server.service.impl;
 
+import com.akvelon.server.dao.api.Dao;
 import com.akvelon.server.dao.api.ProductDao;
 import com.akvelon.server.dao.api.ProductPhotoDao;
 import com.akvelon.server.domain.Product;
@@ -11,19 +12,10 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl extends SuperService<Product> implements ProductService{
-    private static ProductServiceImpl productService;
     @Autowired
     private ProductDao productDao;
     @Autowired
     private ProductPhotoDao productPhotoDao;
-
-    @Autowired
-    protected ProductServiceImpl(ProductDao dao) {
-        super(dao);
-        if (productService == null) {
-            productService = this;
-        }
-    }
 
     @Override
     public Integer create(Product value) {
@@ -59,5 +51,10 @@ public class ProductServiceImpl extends SuperService<Product> implements Product
     @Override
     public List<Product> searchProduct(String searchRequest) {
         return productDao.searchProduct(searchRequest);
+    }
+
+    @Override
+    public Dao<Integer, Product> getRepository() {
+        return productDao;
     }
 }

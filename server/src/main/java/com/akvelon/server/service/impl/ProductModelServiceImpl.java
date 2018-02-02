@@ -1,8 +1,6 @@
 package com.akvelon.server.service.impl;
 
-import com.akvelon.server.dao.api.IllustrationDao;
-import com.akvelon.server.dao.api.ProductDescriptionDao;
-import com.akvelon.server.dao.api.ProductModelDao;
+import com.akvelon.server.dao.api.*;
 import com.akvelon.server.domain.ProductModel;
 import com.akvelon.server.service.api.ProductModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductModelServiceImpl extends SuperService<ProductModel> implements ProductModelService {
-    private static ProductModelServiceImpl productModelService;
+    @Autowired
+    ProductModelDao productModelDao;
     @Autowired
     private IllustrationDao illustrationDao;
     @Autowired
     private ProductDescriptionDao productDescriptionDao;
-
-
-    @Autowired
-    protected ProductModelServiceImpl(ProductModelDao dao) {
-        super(dao);
-        if (productModelService == null) {
-            productModelService = this;
-        }
-    }
 
     @Override
     public Integer create(ProductModel value) {
@@ -55,5 +45,10 @@ public class ProductModelServiceImpl extends SuperService<ProductModel> implemen
             }
         }
         super.update(value);
+    }
+
+    @Override
+    public Dao<Integer, ProductModel> getRepository() {
+        return productModelDao;
     }
 }

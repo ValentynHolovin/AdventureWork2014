@@ -23,7 +23,7 @@ public class SuperStringServiceTest {
     @Mock
     private CultureDao cultureDao;
     @InjectMocks
-    private SuperStringService<Culture> cultureSuperStringService = new CultureServiceImpl(cultureDao);
+    private SuperStringService<Culture> cultureSuperStringService;
     private Culture culture;
     private List<Culture> cultures;
 

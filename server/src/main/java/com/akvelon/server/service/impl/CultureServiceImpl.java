@@ -1,6 +1,7 @@
 package com.akvelon.server.service.impl;
 
 import com.akvelon.server.dao.api.CultureDao;
+import com.akvelon.server.dao.api.Dao;
 import com.akvelon.server.domain.Culture;
 import com.akvelon.server.service.api.CultureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CultureServiceImpl extends SuperStringService<Culture> implements CultureService {
-    private static CultureServiceImpl cultureService;
 
     @Autowired
-    protected CultureServiceImpl(CultureDao dao) {
-        super(dao);
+    private CultureDao cultureDao;
 
-        if (cultureService == null) {
-            cultureService = this;
-        }
+    @Override
+    public Dao<String, Culture> getRepository() {
+        return cultureDao;
     }
 }

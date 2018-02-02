@@ -7,13 +7,11 @@ import com.akvelon.server.service.api.UnitMeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UnitMeasureServiceImpl extends SuperStringService<UnitMeasure> implements UnitMeasureService {
-    private static UnitMeasureServiceImpl unitMeasureService;
-
     @Autowired
-    protected UnitMeasureServiceImpl(UnitMeasureDao dao) {
-        super(dao);
-        if (unitMeasureService == null) {
-            unitMeasureService = this;
-        }
+    private UnitMeasureDao unitMeasureDao;
+
+    @Override
+    public Dao<String, UnitMeasure> getRepository() {
+        return unitMeasureDao;
     }
 }
