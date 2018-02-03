@@ -6,27 +6,20 @@ import com.akvelon.server.service.api.ProductModelService;
 import com.akvelon.server.service.api.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-public class MainRESTController {
+public class ProductRESTController {
     @Autowired
     private ProductService productService;
-    @Autowired
-    private ProductModelService productModelService;
 
     @RequestMapping(value = "/")
     public String index() {
         return "index.html";
-    }
-
-    @Deprecated
-    @RequestMapping(value = "/get_all")
-    public List<Product> getAllProduct() {
-        return productService.getAll();
     }
 
     @RequestMapping(value = "/search/{searchRequest}")
@@ -38,8 +31,25 @@ public class MainRESTController {
     public List<Product> getTopFive() {
         return productService.getTopFive();
     }
-    @RequestMapping(value = "/test")
-    public List<ProductModel> test() {
-        return productModelService.getAll();
+
+    @RequestMapping(value = "/products/{productID}")
+    public Product getProduct(@PathVariable("productID") Integer productID) {
+        return productService.read(productID);
     }
+
+    @RequestMapping(value = "/products/delete/{productID}")
+    public void deleteProduct(@PathVariable("productID") Integer productID) {
+        productService.delete(productID);
+    }
+
+    @RequestMapping(value = "/products/create")
+    public Integer createProduct(@RequestBody Product product) {
+        return productService.create(product);
+    }
+
+    @RequestMapping(value = "/products/update")
+    public void updateProduct(@RequestBody Product product) {
+        productService.update(product);
+    }
+
 }

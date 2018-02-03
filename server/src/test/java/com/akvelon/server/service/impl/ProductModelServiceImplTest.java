@@ -43,7 +43,7 @@ public class ProductModelServiceImplTest {
     private List<ProductDescription> productDescriptions;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         illustrations = new ArrayList<>();
         productDescriptions = new ArrayList<>();
