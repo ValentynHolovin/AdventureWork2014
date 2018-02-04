@@ -1,0 +1,8 @@
+com.akvelon.server
+com.akvelon.server.controller
+com.akvelon.server.dao.api
+com.akvelon.server.dao.impl
+com.akvelon.server.domain
+com.akvelon.server.filter
+com.akvelon.server.service.api
+com.akvelon.server.service.impl
