@@ -10,6 +10,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the abstract class of SuperDao
+ * and the interface ProductDao for the domain object Product.
+ * @see com.akvelon.server.dao.impl.SuperDao
+ * @see com.akvelon.server.dao.api.ProductDao
+ */
 @Repository
 public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
     private static ProductDaoImpl productDao;
@@ -108,7 +114,7 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
     }
 
     @Override
-    protected RowMapper getRowMapper() {
+    protected RowMapper<Product> getRowMapper() {
         return rowMapper;
     }
 

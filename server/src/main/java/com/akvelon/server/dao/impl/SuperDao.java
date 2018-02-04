@@ -14,6 +14,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Implementation of the DAO interface. The class implements all CRUD operations for domain objects
+ * whose ID type is Integer.
+ * Child classes must implement three abstract methods from this class.
+ * @param <V> type of domain object.
+ */
 @Repository
 public abstract class SuperDao<V extends Entity<Integer>> implements Dao<Integer, V> {
     private V obj;
@@ -86,9 +92,26 @@ public abstract class SuperDao<V extends Entity<Integer>> implements Dao<Integer
         return jdbcTemplate.query(sql, new Object[]{value}, getRowMapper());
     }
 
-    protected abstract RowMapper getRowMapper();
+    /**
+     * Return RowMapper object for domain object.
+     */
+    protected abstract RowMapper<V> getRowMapper();
 
+    /**
+     * Create a PreparedStatement with an INSERT request for the domain object.
+     * @param connection sql database connection
+     * @param value domain object.
+     * @return PreparedStatement with an INSERT request for the domain object.
+     * @throws SQLException
+     */
     protected abstract PreparedStatement createInsertStatement(Connection connection, V value) throws SQLException;
 
+    /**
+     * Create a PreparedStatement with an UPDATE request for the domain object.
+     * @param connection sql database connection
+     * @param value domain object.
+     * @return PreparedStatement with an UPDATE request for the domain object.
+     * @throws SQLException
+     */
     protected abstract PreparedStatement createUpdateStatement(Connection connection, V value) throws SQLException;
 }

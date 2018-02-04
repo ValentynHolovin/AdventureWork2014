@@ -8,6 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 
 
+/**
+ * Implementation of the abstract class of SuperDao
+ * and the interface ProductCategoryDao for the domain object ProductCategory.
+ * @see com.akvelon.server.dao.impl.SuperDao
+ * @see com.akvelon.server.dao.api.ProductCategoryDao
+ */
 @Repository
 public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements ProductCategoryDao {
     private static ProductCategoryDaoImpl productCategoryDao;
@@ -34,7 +40,7 @@ public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements
     }
 
     @Override
-    protected RowMapper getRowMapper() {
+    protected RowMapper<ProductCategory> getRowMapper() {
         return rowMapper;
     }
 

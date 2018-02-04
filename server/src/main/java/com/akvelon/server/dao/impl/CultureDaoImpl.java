@@ -10,7 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+/**
+ * Implementation of the abstract class of SuperStringDao
+ * and the interface CultureDao for the domain object Culture.
+ * @see com.akvelon.server.dao.impl.SuperStringDao
+ * @see com.akvelon.server.dao.api.CultureDao
+ */
 @Repository
 public class CultureDaoImpl extends SuperStringDao<Culture> implements CultureDao {
     private static CultureDaoImpl cultureDao;
@@ -36,7 +41,7 @@ public class CultureDaoImpl extends SuperStringDao<Culture> implements CultureDa
     }
 
     @Override
-    protected RowMapper getRowMapper() {
+    protected RowMapper<Culture> getRowMapper() {
         return rowMapper;
     }
 

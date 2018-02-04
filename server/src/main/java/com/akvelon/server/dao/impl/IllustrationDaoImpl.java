@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
+/**
+ * Implementation of the abstract class of SuperDao
+ * and the interface IllustrationDao for the domain object Illustration.
+ * @see com.akvelon.server.dao.impl.SuperDao
+ * @see com.akvelon.server.dao.api.IllustrationDao
+ */
 @Repository
 public class IllustrationDaoImpl extends SuperDao<Illustration> implements IllustrationDao {
     private static IllustrationDaoImpl illustrationDao;
@@ -32,7 +38,7 @@ public class IllustrationDaoImpl extends SuperDao<Illustration> implements Illus
     }
 
     @Override
-    protected RowMapper getRowMapper() {
+    protected RowMapper<Illustration> getRowMapper() {
         return rowMapper;
     }
 

@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
+/**
+ * Implementation of the abstract class of SuperStringDao
+ * and the interface UnitMeasureDao for the domain object UnitMeasure.
+ * @see com.akvelon.server.dao.impl.SuperStringDao
+ * @see com.akvelon.server.dao.api.UnitMeasureDao
+ */
 @Repository
 public class UnitMeasureDaoImpl extends SuperStringDao<UnitMeasure> implements UnitMeasureDao {
     private static UnitMeasureDaoImpl unitMeasureDao;
@@ -37,7 +43,7 @@ public class UnitMeasureDaoImpl extends SuperStringDao<UnitMeasure> implements U
     }
 
     @Override
-    protected RowMapper getRowMapper() {
+    protected RowMapper<UnitMeasure> getRowMapper() {
         return rowMapper;
     }
 

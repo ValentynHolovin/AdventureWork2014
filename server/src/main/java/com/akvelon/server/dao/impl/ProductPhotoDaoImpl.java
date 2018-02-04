@@ -8,6 +8,12 @@ import org.springframework.stereotype.Repository;
 import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 
+/**
+ * Implementation of the abstract class of SuperDao
+ * and the interface ProductPhotoDao for the domain object ProductPhoto.
+ * @see com.akvelon.server.dao.impl.SuperDao
+ * @see com.akvelon.server.dao.api.ProductPhotoDao
+ */
 @Repository
 public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements ProductPhotoDao {
     private static ProductPhotoDaoImpl productPhotoDao;
@@ -36,7 +42,7 @@ public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements Produ
     }
 
     @Override
-    protected RowMapper getRowMapper() {
+    protected RowMapper<ProductPhoto> getRowMapper() {
         return rowMapper;
     }
 
