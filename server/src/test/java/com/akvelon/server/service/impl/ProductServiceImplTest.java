@@ -18,6 +18,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for ProductServiceImpl class.
+ */
 @RunWith(SpringRunner.class)
 public class ProductServiceImplTest {
 

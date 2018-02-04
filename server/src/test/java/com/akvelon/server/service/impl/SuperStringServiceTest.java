@@ -17,6 +17,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * Unit tests for SuperStringService class.
+ */
 @RunWith(SpringRunner.class)
 public class SuperStringServiceTest {
 

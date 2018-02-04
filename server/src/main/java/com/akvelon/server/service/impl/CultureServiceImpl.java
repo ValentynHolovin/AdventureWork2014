@@ -8,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+/**
+ * Implementation of the class of SuperStringService
+ * and the interface CultureService for the domain object Culture.
+ * @see com.akvelon.server.service.api.CultureService
+ * @see com.akvelon.server.service.impl.SuperStringService
+ */
 @Service
 public class CultureServiceImpl extends SuperStringService<Culture> implements CultureService {
 

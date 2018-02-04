@@ -6,6 +6,12 @@ import com.akvelon.server.service.api.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of the Service interface. The class implements all CRUD operations for domain objects
+ * through DAO objects, whose ID type is Integer.
+ * Child classes must implement one abstract method from Service interface.
+ * @param <V> type of domain object.
+ */
 @org.springframework.stereotype.Service
 public class SuperService<V extends Entity<Integer>> implements Service<Integer, V> {
     private Dao<Integer, V> dao;

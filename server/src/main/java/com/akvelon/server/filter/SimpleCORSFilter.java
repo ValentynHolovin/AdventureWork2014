@@ -6,6 +6,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * A filter that adds CORS headers to the answer.
+ */
 @Component
 public class SimpleCORSFilter implements Filter {
 

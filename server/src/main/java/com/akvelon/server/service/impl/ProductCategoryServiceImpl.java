@@ -8,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+/**
+ * Implementation of the class of SuperService
+ * and the interface ProductCategoryService for the domain object ProductCategory.
+ * @see com.akvelon.server.service.api.ProductCategoryService
+ * @see com.akvelon.server.service.impl.SuperService
+ */
 @Service
 public class ProductCategoryServiceImpl extends SuperService<ProductCategory> implements ProductCategoryService {
     @Autowired

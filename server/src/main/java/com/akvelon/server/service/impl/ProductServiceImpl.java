@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of the class of SuperService
+ * and the interface ProductService for the domain object Product.
+ * @see com.akvelon.server.service.api.ProductService
+ * @see com.akvelon.server.service.impl.SuperService
+ */
 @Service
 public class ProductServiceImpl extends SuperService<Product> implements ProductService{
     @Autowired

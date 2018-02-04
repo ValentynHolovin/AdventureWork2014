@@ -15,7 +15,7 @@ public interface ProductDao extends Dao<Integer, Product> {
      * Top five bikes: five bikes for which the largest transaction is registered with type S(Sales).
      * @return read Product values in the List format.
      */
-    public List<Product> getTopFive();
+    List<Product> getTopFive();
 
     /**
      * Reads Product objects from a database
@@ -23,5 +23,5 @@ public interface ProductDao extends Dao<Integer, Product> {
      * @param searchRequest search request string.
      * @return read Product values in the List format.
      */
-    public List<Product> searchProduct(String searchRequest);
+    List<Product> searchProduct(String searchRequest);
 }

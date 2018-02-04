@@ -22,6 +22,9 @@ import java.util.UUID;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for ProductModelServiceImpl class.
+ */
 @RunWith(SpringRunner.class)
 public class ProductModelServiceImplTest {
 

@@ -7,6 +7,12 @@ import com.akvelon.server.service.api.UnitMeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the class of SuperStringService
+ * and the interface UnitMeasureService for the domain object UnitMeasure.
+ * @see com.akvelon.server.service.api.UnitMeasureService
+ * @see com.akvelon.server.service.impl.SuperStringService
+ */
 @Service
 public class UnitMeasureServiceImpl extends SuperStringService<UnitMeasure> implements UnitMeasureService {
     @Autowired
