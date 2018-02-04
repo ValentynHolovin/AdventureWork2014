@@ -1,11 +1,15 @@
 package com.akvelon.server.dao.impl;
 
 import com.akvelon.server.dao.api.ProductCategoryDao;
+import com.akvelon.server.dao.api.ProductSubcategoryDao;
 import com.akvelon.server.domain.ProductCategory;
+import com.akvelon.server.domain.ProductSubcategory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.List;
 
 
 /**
@@ -18,6 +22,8 @@ import java.sql.*;
 public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements ProductCategoryDao {
     private static ProductCategoryDaoImpl productCategoryDao;
     private static RowMapper<ProductCategory> rowMapper;
+    @Autowired
+    private ProductSubcategoryDao productSubcategoryDao;
 
     private final String SQL_INSERT = "INSERT INTO productcategory (Name, rowguid) values (?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productcategory SET Name = ?, rowguid = ? WHERE ProductCategoryID = ?";
@@ -37,6 +43,17 @@ public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements
                 return productCategory;
             };
         }
+    }
+
+    @Override
+    public void delete(Integer key) {
+        List<ProductSubcategory> productSubcategories = productSubcategoryDao.readAllBy("ProductCategoryID", key);
+
+        for (ProductSubcategory productSubcategory : productSubcategories) {
+            productSubcategoryDao.delete(productSubcategory.getId());
+        }
+
+        super.delete(key);
     }
 
     @Override

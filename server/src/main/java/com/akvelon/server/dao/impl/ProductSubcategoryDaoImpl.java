@@ -1,13 +1,16 @@
 package com.akvelon.server.dao.impl;
 
 import com.akvelon.server.dao.api.ProductCategoryDao;
+import com.akvelon.server.dao.api.ProductDao;
 import com.akvelon.server.dao.api.ProductSubcategoryDao;
+import com.akvelon.server.domain.Product;
 import com.akvelon.server.domain.ProductSubcategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.List;
 
 /**
  * Implementation of the abstract class of SuperDao
@@ -21,6 +24,8 @@ public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> impl
     private static RowMapper<ProductSubcategory> rowMapper;
     @Autowired
     private ProductCategoryDao productCategoryDao;
+    @Autowired
+    private ProductDao productDao;
 
     private final String SQL_INSERT = "INSERT INTO productsubcategory (ProductCategoryID, Name, rowguid) values (?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productsubcategory SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductSubcategoryID = ?";
@@ -41,6 +46,18 @@ public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> impl
                 return productSubcategory;
             };
         }
+    }
+
+    @Override
+    public void delete(Integer key) {
+        List<Product> products = productDao.readAllBy("ProductSubcategoryID", key);
+
+        for (Product product : products) {
+            product.setProductSubcategory(null);
+            productDao.update(product);
+        }
+
+        super.delete(key);
     }
 
     @Override

@@ -37,6 +37,7 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
     private final String SQL_GET_PRODUCTPHOTO = "SELECT ProductPhotoID FROM productproductphoto WHERE ProductID = ?";
     private final String SQL_INSERT_PRODUCTPRODUCTPHOTO = "INSERT INTO productproductphoto (ProductID, ProductPhotoID, Primary) values (?, ?, ?) ON DUPLICATE KEY UPDATE ProdectID = ProductID";
     private final String SQL_SEARCH = "SELECT * FROM product WHERE Name LIKE \"%%%s%%\"";
+    private final String SQL_DELETE_PRODUCTPRODUCTPHOTO = "DELETE * FROM productproductphoto WHERE ProductID = ?";
     private final String SQL_GET_TOP_FIVE = "SELECT *, COUNT(*) FROM product AS t1\n" +
             "LEFT JOIN transactionhistoryarchive AS t2 ON t1.ProductID = t2.ProductID AND t2.TransactionType = 'S' \n" +
             "LEFT JOIN productsubcategory AS t3 ON t1.ProductSubcategoryID = t3.ProductSubcategoryID \n" +
@@ -89,6 +90,26 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
                 return product;
             };
         }
+    }
+
+    @Override
+    public void delete(Integer key) {
+        List<ProductReview> productReviews = productReviewDao.readAllBy("ProductID", key);
+
+        for (ProductReview productReview : productReviews) {
+            productReviewDao.delete(productReview.getId());
+        }
+
+        for (ProductPhoto productPhoto : read(key).getProductPhotos()) {
+            if (productPhoto.getId() != 1) {
+                productPhotoDao.delete(productPhoto.getId());
+            }
+        }
+
+        this.jdbcTemplate.update(SQL_DELETE_PRODUCTPRODUCTPHOTO, key);
+        //TODO need delete productID from others tables?
+
+        super.delete(key);
     }
 
     @Override

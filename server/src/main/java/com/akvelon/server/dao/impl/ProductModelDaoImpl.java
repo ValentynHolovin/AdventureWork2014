@@ -1,9 +1,11 @@
 package com.akvelon.server.dao.impl;
 
 import com.akvelon.server.dao.api.IllustrationDao;
+import com.akvelon.server.dao.api.ProductDao;
 import com.akvelon.server.dao.api.ProductDescriptionDao;
 import com.akvelon.server.dao.api.ProductModelDao;
 import com.akvelon.server.domain.Illustration;
+import com.akvelon.server.domain.Product;
 import com.akvelon.server.domain.ProductDescription;
 import com.akvelon.server.domain.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
     private IllustrationDao illustrationDao;
     @Autowired
     private ProductDescriptionDao productDescriptionDao;
+    @Autowired
+    private ProductDao productDao;
 
     private final String SQL_INSERT = "INSERT INTO productmodel (Name, CatalogDescription, Instructions, rowguid) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productmodel SET Name = ?, CatalogDescription = ?, Instructions = ?, rowguid = ? WHERE ProductModelID = ?";
@@ -35,6 +39,8 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
     private final String SQL_INSERT_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE = "INSERT INTO productmodelproductdescriptionculture (ProductModelID, ProductDescriptionID, CultureID) valuse (?, ?, ?) ON DUPLICATE KEY UPDATE ProductDescriptionID = ProductDescriptionID";
     private final String SQL_GET_ILLUSTRATIONS = "SELECT IllustrationID FROM productmodelillustration WHERE ProductModelID = ?";
     private final String SQL_GET_DESCRIPTIONS = "SELECT ProductDescriptionID FROM productmodelproductdescriptionculture WHERE ProductModelID = ?";
+    private final String SQL_DELETE_PRODUCTMODELILLUSTRATION = "DELETE * FROM productmodelillustration WHERE ProductModelID = ?";
+    private final String SQL_DELETE_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE = "DELETE * FROM productmodelproductdescriptionculture WHERE ProductModelID = ?";
 
     protected ProductModelDaoImpl() {
         super(new ProductModel());
@@ -69,6 +75,26 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
                 return productModel;
             };
         }
+    }
+
+    @Override
+    public void delete(Integer key) {
+        List<Product> products = productDao.readAllBy("ProductModelID", key);
+
+        for (Product product : products) {
+            product.setProductModel(null);
+            productDao.update(product);
+        }
+
+        this.jdbcTemplate.update(SQL_DELETE_PRODUCTMODELILLUSTRATION, key);
+
+        for (ProductDescription productDescription : read(key).getProductDescriptions()) {
+            productDescriptionDao.delete(productDescription.getId());
+        }
+
+        this.jdbcTemplate.update(SQL_DELETE_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE, key);
+
+        super.delete(key);
     }
 
     @Override
