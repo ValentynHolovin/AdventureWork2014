@@ -42,8 +42,9 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
             "WHERE t3.ProductCategoryID = 1\n" +
             "GROUP BY t1.ProductID ORDER BY COUNT(*) DESC LIMIT 5";
 
-    protected ProductDaoImpl() {
-        super(new Product());
+    @Override
+    protected Product getClassObject() {
+        return new Product();
     }
 
     @Override

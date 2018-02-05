@@ -18,8 +18,9 @@ public class UnitMeasureDaoImpl extends SuperStringDao<UnitMeasure> implements U
     private final String SQL_INSERT = "INSERT INTO unitmeasure (UnitMeasureCode, Name) VALUES (?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE unitmeasure SET UnitMeasureCode = ?, Name = ? WHERE UnitMeasureCode = ?";
 
-    protected UnitMeasureDaoImpl() {
-        super(new UnitMeasure());
+    @Override
+    protected UnitMeasure getClassObject() {
+        return new UnitMeasure();
     }
 
     @Override

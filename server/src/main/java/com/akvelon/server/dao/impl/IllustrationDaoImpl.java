@@ -15,13 +15,13 @@ import java.sql.*;
  */
 @Repository
 public class IllustrationDaoImpl extends SuperDao<Illustration> implements IllustrationDao {
-    private static RowMapper<Illustration> rowMapper;
 
     private final String SQL_INSERT = "INSERT INTO illustration (Diagram) values (?) ON DUPLICATE KEY UPDATE Diagram = Diagram";
     private final String SQL_UPDATE = "UPDATE illustration SET Diagram = ? WHERE IllustrationID = ?";
 
-    protected IllustrationDaoImpl() {
-        super(new Illustration());
+    @Override
+    protected Illustration getClassObject() {
+        return new Illustration();
     }
 
     @Override

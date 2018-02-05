@@ -25,8 +25,9 @@ public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> impl
     private final String SQL_UPDATE = "UPDATE productdescription SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductDescriptionID = ?";
     private final String SQL_GET_CULTURE = "SELECT CultureID FROM productmodelproductdescriptionculture WHERE ProductDescriptionID = ?";
 
-    protected ProductDescriptionDaoImpl() {
-        super(new ProductDescription());
+    @Override
+    protected ProductDescription getClassObject() {
+        return new ProductDescription();
     }
 
     @Override

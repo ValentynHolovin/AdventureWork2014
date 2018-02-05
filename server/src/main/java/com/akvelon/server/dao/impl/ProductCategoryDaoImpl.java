@@ -26,8 +26,9 @@ public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements
     private final String SQL_INSERT = "INSERT INTO productcategory (Name, rowguid) values (?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productcategory SET Name = ?, rowguid = ? WHERE ProductCategoryID = ?";
 
-    protected ProductCategoryDaoImpl() {
-        super(new ProductCategory());
+    @Override
+    protected ProductCategory getClassObject() {
+        return new ProductCategory();
     }
 
 /*    @Override

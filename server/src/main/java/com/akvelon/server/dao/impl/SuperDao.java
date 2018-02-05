@@ -22,7 +22,6 @@ import java.util.List;
  */
 @Repository
 public abstract class SuperDao<V extends Entity<Integer>> implements Dao<Integer, V> {
-    private V obj;
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;
@@ -31,16 +30,9 @@ public abstract class SuperDao<V extends Entity<Integer>> implements Dao<Integer
     private static final String SQL_GET_BY = "SELECT * FROM %s WHERE %s = ?";
     private static final String SQL_DELETE_BY_ID = "DELETE FROM %s WHERE %s = ?";
 
-    public SuperDao() {
-    }
-
-    public SuperDao(V obj) {
-        this.obj = obj;
-    }
-
     @Override
     public List<V> getAll() {
-        String sql = String.format(SQL_SELECT_ALL, obj.getClass().getSimpleName().toLowerCase());
+        String sql = String.format(SQL_SELECT_ALL, getClassObject().getClass().getSimpleName().toLowerCase());
 
         return jdbcTemplate.query(sql, getRowMapper());
     }
@@ -59,7 +51,7 @@ public abstract class SuperDao<V extends Entity<Integer>> implements Dao<Integer
 
     @Override
     public V read(Integer key) {
-        return readBy(obj.getClass().getSimpleName() + "ID", key);
+        return readBy(getClassObject().getClass().getSimpleName() + "ID", key);
     }
 
     @Override
@@ -69,7 +61,7 @@ public abstract class SuperDao<V extends Entity<Integer>> implements Dao<Integer
 
     @Override
     public void delete(Integer key) {
-        String sql = String.format(SQL_DELETE_BY_ID, obj.getClass().getSimpleName().toLowerCase(), obj.getClass().getSimpleName() + "ID");
+        String sql = String.format(SQL_DELETE_BY_ID, getClassObject().getClass().getSimpleName().toLowerCase(), getClassObject().getClass().getSimpleName() + "ID");
 
         jdbcTemplate.update(sql, key);
     }
@@ -87,10 +79,15 @@ public abstract class SuperDao<V extends Entity<Integer>> implements Dao<Integer
 
     @Override
     public <T> List<V> readAllBy(String fieldName, T value) {
-        String sql = String.format(SQL_GET_BY, obj.getClass().getSimpleName().toLowerCase(), fieldName);
+        String sql = String.format(SQL_GET_BY, getClassObject().getClass().getSimpleName().toLowerCase(), fieldName);
 
         return jdbcTemplate.query(sql, new Object[]{value}, getRowMapper());
     }
+
+    /**
+     * Return domain object of type V.
+     */
+    protected abstract V getClassObject();
 
     /**
      * Return RowMapper object for domain object.

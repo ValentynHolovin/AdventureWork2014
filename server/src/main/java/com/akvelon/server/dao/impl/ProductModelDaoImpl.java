@@ -37,14 +37,15 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
     private final String SQL_INSERT_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE = "INSERT INTO productmodelproductdescriptionculture (ProductModelID, ProductDescriptionID, CultureID) valuse (?, ?, ?) ON DUPLICATE KEY UPDATE ProductDescriptionID = ProductDescriptionID";
     private final String SQL_GET_ILLUSTRATIONS = "SELECT IllustrationID FROM productmodelillustration WHERE ProductModelID = ?";
     private final String SQL_GET_DESCRIPTIONS = "SELECT ProductDescriptionID FROM productmodelproductdescriptionculture WHERE ProductModelID = ?";
-    private final String SQL_DELETE_PRODUCTMODELILLUSTRATION = "DELETE * FROM productmodelillustration WHERE ProductModelID = ?";
-    private final String SQL_DELETE_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE = "DELETE * FROM productmodelproductdescriptionculture WHERE ProductModelID = ?";
+    private final String SQL_DELETE_PRODUCTMODELILLUSTRATION = "DELETE FROM productmodelillustration WHERE ProductModelID = ?";
+    private final String SQL_DELETE_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE = "DELETE FROM productmodelproductdescriptionculture WHERE ProductModelID = ?";
 
-    protected ProductModelDaoImpl() {
-        super(new ProductModel());
+    @Override
+    protected ProductModel getClassObject() {
+        return new ProductModel();
     }
 
-/*    @Override
+    /*    @Override
     public void delete(Integer key) {
         List<Product> products = productDao.readAllBy("ProductModelID", key);
 

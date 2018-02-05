@@ -18,8 +18,9 @@ public class ProductReviewDaoImpl extends SuperDao<ProductReview> implements Pro
     private final String SQL_INSERT = "INSERT INTO productreview (ProductID, ReviewerName, EmailAddress, Rating, Comments) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE ReviewerName = ReviewerName";
     private final String SQL_UPDATE = "UPDATE productreview SET ProductID = ?, ReviewerName = ?, EmailAddress = ?, Rating = ?, Comments = ? WHERE ProductReviewID = ?";
 
-    protected ProductReviewDaoImpl() {
-        super(new ProductReview());
+    @Override
+    protected ProductReview getClassObject() {
+        return new ProductReview();
     }
 
     @Override

@@ -22,8 +22,10 @@ public class CultureDaoImpl extends SuperStringDao<Culture> implements CultureDa
     private final String SQL_INSERT = "INSERT INTO culture (CultureID, Name) values (?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE culture SET CultureID = ?, Name = ? WHERE CultureID = ?";
 
-    protected CultureDaoImpl() {
-        super(new Culture());
+
+    @Override
+    protected Culture getClassObject() {
+        return new Culture();
     }
 
     @Override

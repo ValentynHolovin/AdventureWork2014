@@ -19,8 +19,9 @@ public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements Produ
     private final String SQL_INSERT = "INSERT INTO productphoto (ThumbNailPhoto, ThumbnailPhotoFileName, LargePhoto, LargePhotoFileName) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE ThumbnailPhotoFileName = ThumbnailPhotoFileName";
     private final String SQL_UPDATE = "UPDATE productphoto SET ThumbNailPhoto = ?, ThumbnailPhotoFileName = ?, LargePhoto = ?, LargePhotoFileName = ? WHERE ProductPhotoID = ?";
 
-    public ProductPhotoDaoImpl() {
-        super(new ProductPhoto());
+    @Override
+    protected ProductPhoto getClassObject() {
+        return new ProductPhoto();
     }
 
     @Override

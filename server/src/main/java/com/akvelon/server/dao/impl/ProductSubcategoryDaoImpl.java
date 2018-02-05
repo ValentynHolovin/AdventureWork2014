@@ -28,11 +28,12 @@ public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> impl
     private final String SQL_INSERT = "INSERT INTO productsubcategory (ProductCategoryID, Name, rowguid) values (?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productsubcategory SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductSubcategoryID = ?";
 
-    protected ProductSubcategoryDaoImpl() {
-        super(new ProductSubcategory());
+    @Override
+    protected ProductSubcategory getClassObject() {
+        return new ProductSubcategory();
     }
 
-/*    @Override
+    /*    @Override
     public void delete(Integer key) {
         List<Product> products = productDao.readAllBy("ProductSubcategoryID", key);
 
