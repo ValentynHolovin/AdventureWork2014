@@ -1,0 +1,47 @@
+.button {
+    padding: 0 24px;
+    margin: 0;
+    text-align: center;
+    border: 1px solid #D4D7DB;
+    background: white;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #8D96A7;
+    line-height: 40px;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button.red {
+    background: firebrick;
+    border-color: firebrick;
+    color: #fff;
+}
+
+.button.green {
+    background: #28B766;
+    border-color: #28B766;
+    color: white;
+}
+.button.blue {
+    background: #138CDD;
+    border-color: #138CDD;
+    color: white;
+}
+
+
+.button.small {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.button.disabled {
+    background: #8D96A7;
+    border-color: #8D96A7;
+}

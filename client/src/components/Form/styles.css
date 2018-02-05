@@ -1,0 +1,57 @@
+.main-form{
+    width: 500px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.main-form .wrapper{
+    margin-right: -10px;
+    height: auto;
+}
+.row.third-left{
+    float: left;
+    width: calc(33% - 10px);
+    margin-right: 10px;
+}
+.row{
+    position: relative;
+    margin: 0 0 30px;
+}
+.row label{
+    font-size: 15px;
+    display: block;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+.row input{
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    height: 30px;
+    padding: 0 15px;
+    border-radius: 2px;
+    outline: none;
+}
+.row input[type='checkbox']{
+    width: 20px;
+    height: 20px;
+}
+.row label.checkbox-label{
+    float: left;
+    width: 180px;
+}
+.row .select{
+    margin-bottom: 20px;
+    height: 30px;
+    line-height: 28px;
+}
+.row span.lb-error{
+    position: absolute;
+    left: 0;
+    top: 100%!important;
+    font-size: 14px;
+    color: firebrick;
+}
+input[type='date']::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+}

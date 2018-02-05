@@ -1,0 +1,91 @@
+.products-list{
+    padding: 15px 0;
+}
+.search-wrap{
+    padding-top: 20px;
+}
+.search-wrap  input{
+    width: calc(100% - 115px);
+    border: 1px solid #D4D7DB;
+    float: left;
+    height: 40px;
+    border-radius: 5px;
+    outline: 0;
+    padding: 0 15px;
+}
+.search-wrap button{
+    float: right;
+}
+
+.products-list .product-elem{
+    margin-bottom: 20px;
+    position: relative;
+    border-radius: 20px;
+    padding: 10px;
+    border: 5px solid #ccc;
+}
+.products-list .product-elem:last-of-type{
+    margin-bottom: 0;
+}
+
+.products-list .product-elem img{
+    display: block;
+    min-width: 500px;
+    margin: 0 auto;
+}
+.products-list .product-elem span{
+    position: absolute;
+    left: 5%;
+    bottom: 30px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+
+.product-elem.searching-elem {
+
+}
+.product-elem.searching-elem img{
+    float: left;
+    width: 150px;
+    margin: 0 15px 15px 0;
+}
+.product-elem.searching-elem .text-info{
+    overflow: hidden;
+}
+
+
+.product-elem.searching-elem .text-info span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 15px;
+    padding-right: 15px;
+    font-size: 22px;
+    position: relative!important;
+    left: inherit!important;
+    bottom: inherit!important;
+}
+.product-elem.searching-elem .text-info span:after{
+    position: absolute;
+    content: '/';
+    right: 5px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.product-elem.searching-elem .text-info span:last-of-type:after{
+    display: none;
+}
+.product-elem.searching-elem .text-info .d-head{
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+.product-elem.searching-elem .text-info p{
+    line-height: 1.2;
+}
+.noResult{
+    padding: 40px 0;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}

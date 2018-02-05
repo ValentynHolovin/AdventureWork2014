@@ -1,0 +1,130 @@
+.product-item{
+    padding: 30px 15px;
+}
+
+.product-item img{
+    float: left;
+    width: 400px;
+    height: 250px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-right: 0;
+    border-radius: 4px 0 0 4px;
+}
+.product-item .text-info{
+    overflow: hidden;
+    padding: 15px;
+    border: 1px solid #ccc;
+    min-height: 250px;
+    border-radius: 0 4px 4px 0;
+}
+.product-item .text-info span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 15px;
+    padding-right: 15px;
+    font-size: 22px;
+    position: relative;
+}
+.product-item .text-info span:after{
+    position: absolute;
+    content: '/';
+    right: 5px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.product-item .text-info span:last-of-type:after{
+    display: none;
+}
+.product-item .text-info .d-head{
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+.product-item .text-info p{
+    line-height: 1.2;
+}
+
+.product-item .description{
+    clear: both;
+    float: left;
+    width: 70%;
+    height: 138px;
+    overflow: hidden;
+}
+.product-item .price-wrap{
+    float: left;
+    width: 30%;
+}
+.tabs{
+    padding-top: 15px;
+}
+
+.tabs span{
+    float: left;
+    padding: 10px 15px;
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 0 4px 0 0;
+    border-bottom: 0;
+    border-left: 0;
+}
+
+.tabs span.active{
+    background: #ccc;
+}
+
+.tabs span:first-of-type{
+    border-left: 1px solid #ccc;
+}
+.tabs span:not(:last-of-type){
+    border-right: 1px solid #ccc;
+    border-radius: 4px 0 0 0;
+}
+
+.tabs-content{
+    border: 1px solid #ccc;
+    border-radius: 0 4px 4px 4px;
+    padding: 15px;
+}
+.tabs-content ul{
+    list-style: none;
+}
+.tabs-content ul li{
+    line-height: 26px;
+}
+
+.reviews{
+    margin-bottom: 15px;
+    padding-bottom: 20px;
+}
+.reviews:last-of-type{
+    margin-bottom: 0;
+}
+.reviews .info{
+    font-size: 20px;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+}
+.reviews .info>div{
+    float: left;
+    font-weight: bold;
+}
+.reviews .info>.review-name{
+    margin-right: 45px;
+}
+.reviews .info .post-date{
+    float: right;
+}
+.reviews .info>div span{
+    font-weight:  normal;
+}
+.reviews p{
+    padding-top: 20px;
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+

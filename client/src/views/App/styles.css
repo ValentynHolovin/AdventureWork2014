@@ -1,0 +1,123 @@
+body {
+    position: relative;
+    color: #333;
+}
+
+.wrapper {
+    height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    min-width: 1000px;
+}
+
+header {
+    position: fixed;
+    text-align: center;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 30px;
+    color: #3A4763;
+    box-shadow: 0 1px 6px 0 rgba(141, 150, 167, 0.4);
+    transition: .3s ease left;
+}
+
+header h1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#content {
+    position: fixed;
+    left: 0;
+    top: 50px;
+    right: 0;
+    bottom: 35px;
+    overflow: auto;
+    transition: .3s ease left;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    background-color: #ccc;
+    border-top: 1px solid #FBFBFC;
+    height: 35px;
+    font-size: 12px;
+    color: #333;
+    line-height: 34px;
+    text-align: center;
+    transition: .3s ease left;
+}
+
+footer span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+header .container{
+    position: relative;
+}
+
+.add-btn, .goBack-btn{
+    position: absolute;
+    right: 30px;
+    cursor: pointer;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 0 10px 0 25px;
+    outline: 0;
+    border: 0;
+}
+.goBack-btn{
+    padding: 0;
+    background: transparent;
+    right: inherit;
+    left: 30px;
+}
+.goBack-btn img{
+    width: 26px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.add-btn:before,
+.add-btn:after{
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 10px;
+    height: 2px;
+    background: #000;
+    content: '';
+    border-radius: 2px;
+}
+.add-btn:after{
+    width: 2px;
+    height: 10px;
+    left: 12px;
+}

@@ -5,19 +5,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.akvelon</groupId>
-    <artifactId>adventure_work</artifactId>
-    <version>1.0</version>
+    <artifactId>client</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <name>client</name>
+    <description>AdventureWork client</description>
+
+    <parent>
+        <groupId>com.akvelon</groupId>
+        <artifactId>adventure_work</artifactId>
+        <version>1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+
     </properties>
 
-    <modules>
-        <module>server</module>
-        <module>client</module>
-    </modules>
 
 
 </project>
