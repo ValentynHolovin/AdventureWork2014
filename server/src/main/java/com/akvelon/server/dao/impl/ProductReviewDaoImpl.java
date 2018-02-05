@@ -15,36 +15,28 @@ import java.sql.*;
  */
 @Repository
 public class ProductReviewDaoImpl extends SuperDao<ProductReview> implements ProductReviewDao {
-    private static ProductReviewDaoImpl productReviewDao;
-    private static RowMapper<ProductReview> rowMapper;
-
     private final String SQL_INSERT = "INSERT INTO productreview (ProductID, ReviewerName, EmailAddress, Rating, Comments) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE ReviewerName = ReviewerName";
     private final String SQL_UPDATE = "UPDATE productreview SET ProductID = ?, ReviewerName = ?, EmailAddress = ?, Rating = ?, Comments = ? WHERE ProductReviewID = ?";
 
     protected ProductReviewDaoImpl() {
         super(new ProductReview());
-        if (productReviewDao == null) {
-            productReviewDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                ProductReview productReview = new ProductReview();
-
-                productReview.setId(rs.getInt("ProductReviewID"));
-                productReview.setProductID(rs.getInt("ProductID"));
-                productReview.setReviewerName(rs.getString("ReviewerName"));
-                productReview.setReviewDate(rs.getDate("ReviewDate"));
-                productReview.setEmailAddress(rs.getString("EmailAddress"));
-                productReview.setRating(rs.getInt("Rating"));
-                productReview.setComments(rs.getString("Comments"));
-
-                return productReview;
-            };
-        }
     }
 
     @Override
     protected RowMapper<ProductReview> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            ProductReview productReview = new ProductReview();
+
+            productReview.setId(rs.getInt("ProductReviewID"));
+            productReview.setProductID(rs.getInt("ProductID"));
+            productReview.setReviewerName(rs.getString("ReviewerName"));
+            productReview.setReviewDate(rs.getDate("ReviewDate"));
+            productReview.setEmailAddress(rs.getString("EmailAddress"));
+            productReview.setRating(rs.getInt("Rating"));
+            productReview.setComments(rs.getString("Comments"));
+
+            return productReview;
+        };
     }
 
     @Override

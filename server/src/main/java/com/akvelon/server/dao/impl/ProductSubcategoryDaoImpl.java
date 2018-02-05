@@ -20,35 +20,19 @@ import java.util.List;
  */
 @Repository
 public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> implements ProductSubcategoryDao {
-    private static ProductSubcategoryDaoImpl productSubcategoryDao;
-    private static RowMapper<ProductSubcategory> rowMapper;
     @Autowired
     private ProductCategoryDao productCategoryDao;
-    @Autowired
-    private ProductDao productDao;
+/*    @Autowired
+    private ProductDao productDao;*/
 
     private final String SQL_INSERT = "INSERT INTO productsubcategory (ProductCategoryID, Name, rowguid) values (?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productsubcategory SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductSubcategoryID = ?";
 
     protected ProductSubcategoryDaoImpl() {
         super(new ProductSubcategory());
-        if (productSubcategoryDao == null) {
-            productSubcategoryDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                ProductSubcategory productSubcategory = new ProductSubcategory();
-
-                productSubcategory.setId(rs.getInt("ProductSubcategoryID"));
-                productSubcategory.setCategory(productCategoryDao.read(rs.getInt("ProductCategoryID")));
-                productSubcategory.setName(rs.getString("Name"));
-                productSubcategory.setRowguid(rs.getString("rowguid"));
-
-                return productSubcategory;
-            };
-        }
     }
 
-    @Override
+/*    @Override
     public void delete(Integer key) {
         List<Product> products = productDao.readAllBy("ProductSubcategoryID", key);
 
@@ -58,11 +42,20 @@ public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> impl
         }
 
         super.delete(key);
-    }
+    }*/
 
     @Override
     protected RowMapper<ProductSubcategory> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            ProductSubcategory productSubcategory = new ProductSubcategory();
+
+            productSubcategory.setId(rs.getInt("ProductSubcategoryID"));
+            productSubcategory.setCategory(productCategoryDao.read(rs.getInt("ProductCategoryID")));
+            productSubcategory.setName(rs.getString("Name"));
+            productSubcategory.setRowguid(rs.getString("rowguid"));
+
+            return productSubcategory;
+        };
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.akvelon.server.service.api.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,25 +26,30 @@ public class ProductServiceImpl extends SuperService<Product> implements Product
 
     @Override
     public Integer create(Product value) {
-        if (value.getProductPhotos().size() == 0) {
+        if (value.getProductPhotos() == null) {
             value.setProductPhotos(productPhotoDao.readAllBy("ProductPhotoID", 1));
+        } else {
+            for (int i = 0; i < value.getProductPhotos().size(); i++) {
+                productPhotoDao.create(value.getProductPhotos().get(i));
+            }
         }
 
-        for (int i = 0; i < value.getProductPhotos().size(); i++) {
-            productPhotoDao.create(value.getProductPhotos().get(i));
-        }
 
         return super.create(value);
     }
 
     @Override
     public void update(Product value) {
-        for (int i = 0; i < value.getProductPhotos().size(); i++) {
-            if (value.getProductPhotos().get(i).getId() != null) {
-                productPhotoDao.update(value.getProductPhotos().get(i));
-            } else {
-                productPhotoDao.create(value.getProductPhotos().get(i));
+        if (value.getProductPhotos() != null) {
+            for (int i = 0; i < value.getProductPhotos().size(); i++) {
+                if (value.getProductPhotos().get(i).getId() != null) {
+                    productPhotoDao.update(value.getProductPhotos().get(i));
+                } else {
+                    productPhotoDao.create(value.getProductPhotos().get(i));
+                }
             }
+        } else {
+            value.setProductPhotos(productPhotoDao.readAllBy("ProductPhotoID", 1));
         }
 
         super.update(value);
@@ -55,8 +61,19 @@ public class ProductServiceImpl extends SuperService<Product> implements Product
     }
 
     @Override
-    public List<Product> searchProduct(String searchRequest) {
-        return productDao.searchProduct(searchRequest);
+    public List<Product> searchProduct(String searchRequest, Integer count) {
+        List<Product> products = productDao.searchProduct(searchRequest);
+        List<Product> result = new ArrayList<>();
+
+        for (int i = 0; i < (count + 1) * 20; i++) {
+            if (i < products.size()) {
+                result.add(products.get(i));
+            } else {
+                break;
+            }
+        }
+
+        return result;
     }
 
     @Override

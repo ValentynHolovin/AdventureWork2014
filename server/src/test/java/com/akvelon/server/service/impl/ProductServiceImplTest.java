@@ -82,8 +82,7 @@ public class ProductServiceImplTest {
     @Test
     public void create2() {
         // given
-        List<ProductPhoto> productPhotoList = new ArrayList<>();
-        product.setProductPhotos(productPhotoList);
+        product.setProductPhotos(null);
         when(productPhotoDao.readAllBy("ProductPhotoID", 1)).thenReturn(productPhotos);
 
         // do
@@ -127,7 +126,7 @@ public class ProductServiceImplTest {
         when(productDao.searchProduct("BestBikes")).thenReturn(products);
 
         // do
-        List<Product> productList = productService.searchProduct("BestBikes");
+        List<Product> productList = productService.searchProduct("BestBikes", 0);
 
         // verify
         verify(productDao, times(1)).searchProduct("BestBikes");

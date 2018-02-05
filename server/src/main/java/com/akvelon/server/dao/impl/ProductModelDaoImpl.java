@@ -24,14 +24,12 @@ import java.util.List;
  */
 @Repository
 public class ProductModelDaoImpl extends SuperDao<ProductModel> implements ProductModelDao {
-    private static ProductModelDaoImpl productModelDao;
-    private static RowMapper<ProductModel> rowMapper;
     @Autowired
     private IllustrationDao illustrationDao;
     @Autowired
     private ProductDescriptionDao productDescriptionDao;
-    @Autowired
-    private ProductDao productDao;
+/*    @Autowired
+    private ProductDao productDao;*/
 
     private final String SQL_INSERT = "INSERT INTO productmodel (Name, CatalogDescription, Instructions, rowguid) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productmodel SET Name = ?, CatalogDescription = ?, Instructions = ?, rowguid = ? WHERE ProductModelID = ?";
@@ -44,40 +42,9 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
 
     protected ProductModelDaoImpl() {
         super(new ProductModel());
-        if (productModelDao == null) {
-            productModelDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                ProductModel productModel = new ProductModel();
-
-                productModel.setId(rs.getInt("ProductModelID"));
-                productModel.setName(rs.getString("Name"));
-                productModel.setCatalogDescription(rs.getString("CatalogDescription"));
-                productModel.setInstruction(rs.getString("Instructions"));
-                productModel.setRowguid(rs.getString("rowguid"));
-
-                List<Integer> illustrationIDList = this.jdbcTemplate.queryForList(SQL_GET_ILLUSTRATIONS, new Object[] {productModel.getId()}, Integer.class);
-                List<Integer> descriptionIDList = this.jdbcTemplate.queryForList(SQL_GET_DESCRIPTIONS, new Object[] {productModel.getId()}, Integer.class);
-                List<Illustration> illustrations = new ArrayList<>();
-                List<ProductDescription> productDescriptions = new ArrayList<>();
-
-                for (Integer id : illustrationIDList) {
-                    illustrations.add(illustrationDao.read(id));
-                }
-
-                for (Integer id : descriptionIDList) {
-                    productDescriptions.add(productDescriptionDao.read(id));
-                }
-
-                productModel.setIllustrations(illustrations);
-                productModel.setProductDescriptions(productDescriptions);
-
-                return productModel;
-            };
-        }
     }
 
-    @Override
+/*    @Override
     public void delete(Integer key) {
         List<Product> products = productDao.readAllBy("ProductModelID", key);
 
@@ -95,7 +62,7 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
         this.jdbcTemplate.update(SQL_DELETE_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE, key);
 
         super.delete(key);
-    }
+    }*/
 
     @Override
     public Integer create(ProductModel value) {
@@ -114,7 +81,33 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
 
     @Override
     protected RowMapper<ProductModel> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            ProductModel productModel = new ProductModel();
+
+            productModel.setId(rs.getInt("ProductModelID"));
+            productModel.setName(rs.getString("Name"));
+            productModel.setCatalogDescription(rs.getString("CatalogDescription"));
+            productModel.setInstruction(rs.getString("Instructions"));
+            productModel.setRowguid(rs.getString("rowguid"));
+
+            List<Integer> illustrationIDList = this.jdbcTemplate.queryForList(SQL_GET_ILLUSTRATIONS, new Object[] {productModel.getId()}, Integer.class);
+            List<Integer> descriptionIDList = this.jdbcTemplate.queryForList(SQL_GET_DESCRIPTIONS, new Object[] {productModel.getId()}, Integer.class);
+            List<Illustration> illustrations = new ArrayList<>();
+            List<ProductDescription> productDescriptions = new ArrayList<>();
+
+            for (Integer id : illustrationIDList) {
+                illustrations.add(illustrationDao.read(id));
+            }
+
+            for (Integer id : descriptionIDList) {
+                productDescriptions.add(productDescriptionDao.read(id));
+            }
+
+            productModel.setIllustrations(illustrations);
+            productModel.setProductDescriptions(productDescriptions);
+
+            return productModel;
+        };
     }
 
     @Override

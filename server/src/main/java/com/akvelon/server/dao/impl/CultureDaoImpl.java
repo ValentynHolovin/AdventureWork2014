@@ -18,31 +18,24 @@ import java.sql.SQLException;
  */
 @Repository
 public class CultureDaoImpl extends SuperStringDao<Culture> implements CultureDao {
-    private static CultureDaoImpl cultureDao;
-    private static RowMapper<Culture> rowMapper;
 
     private final String SQL_INSERT = "INSERT INTO culture (CultureID, Name) values (?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE culture SET CultureID = ?, Name = ? WHERE CultureID = ?";
 
     protected CultureDaoImpl() {
         super(new Culture());
-        if (cultureDao == null) {
-            cultureDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                Culture culture = new Culture();
-
-                culture.setId(rs.getString("CultureID"));
-                culture.setName(rs.getString("Name"));
-
-                return culture;
-            };
-        }
     }
 
     @Override
     protected RowMapper<Culture> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            Culture culture = new Culture();
+
+            culture.setId(rs.getString("CultureID"));
+            culture.setName(rs.getString("Name"));
+
+            return culture;
+        };
     }
 
     @Override

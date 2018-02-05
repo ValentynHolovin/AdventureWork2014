@@ -21,7 +21,8 @@ public interface ProductService extends Service<Integer, Product> {
      * Reads Product objects from a database through ProductDAO objects,
      * whose name contains a searchRequest.
      * @param searchRequest search request string.
+     * @param count number of 20 items to return.
      * @return read Product values in the List format.
      */
-    List<Product> searchProduct(String searchRequest);
+    List<Product> searchProduct(String searchRequest, Integer count);
 }

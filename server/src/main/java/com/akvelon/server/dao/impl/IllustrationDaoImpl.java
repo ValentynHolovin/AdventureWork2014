@@ -15,7 +15,6 @@ import java.sql.*;
  */
 @Repository
 public class IllustrationDaoImpl extends SuperDao<Illustration> implements IllustrationDao {
-    private static IllustrationDaoImpl illustrationDao;
     private static RowMapper<Illustration> rowMapper;
 
     private final String SQL_INSERT = "INSERT INTO illustration (Diagram) values (?) ON DUPLICATE KEY UPDATE Diagram = Diagram";
@@ -23,23 +22,18 @@ public class IllustrationDaoImpl extends SuperDao<Illustration> implements Illus
 
     protected IllustrationDaoImpl() {
         super(new Illustration());
-        if (illustrationDao == null) {
-            illustrationDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                Illustration illustration = new Illustration();
-
-                illustration.setId(rs.getInt("IllustrationID"));
-                illustration.setDiagram(rs.getString("Diagram"));
-
-                return illustration;
-            };
-        }
     }
 
     @Override
     protected RowMapper<Illustration> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            Illustration illustration = new Illustration();
+
+            illustration.setId(rs.getInt("IllustrationID"));
+            illustration.setDiagram(rs.getString("Diagram"));
+
+            return illustration;
+        };
     }
 
     @Override

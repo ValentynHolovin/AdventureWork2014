@@ -18,8 +18,6 @@ import java.sql.*;
  */
 @Repository
 public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> implements ProductDescriptionDao {
-    private static ProductDescriptionDaoImpl productDescriptionDao;
-    private static RowMapper<ProductDescription> rowMapper;
     @Autowired
     private CultureDao cultureDao;
 
@@ -29,26 +27,21 @@ public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> impl
 
     protected ProductDescriptionDaoImpl() {
         super(new ProductDescription());
-        if (productDescriptionDao == null) {
-            productDescriptionDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                ProductDescription productDescription = new ProductDescription();
-
-                productDescription.setId(rs.getInt("ProductDescriptionID"));
-                productDescription.setDescription(rs.getString("Description"));
-                productDescription.setRowguid(rs.getString("rowguid"));
-                Culture culture = cultureDao.read(this.jdbcTemplate.queryForObject(SQL_GET_CULTURE, new Object[] {productDescription.getId()}, String.class));
-                productDescription.setCulture(culture);
-
-                return productDescription;
-            };
-        }
     }
 
     @Override
     protected RowMapper<ProductDescription> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            ProductDescription productDescription = new ProductDescription();
+
+            productDescription.setId(rs.getInt("ProductDescriptionID"));
+            productDescription.setDescription(rs.getString("Description"));
+            productDescription.setRowguid(rs.getString("rowguid"));
+            Culture culture = cultureDao.read(this.jdbcTemplate.queryForObject(SQL_GET_CULTURE, new Object[] {productDescription.getId()}, String.class));
+            productDescription.setCulture(culture);
+
+            return productDescription;
+        };
     }
 
     @Override

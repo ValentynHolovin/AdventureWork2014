@@ -18,12 +18,6 @@ import java.util.List;
 public class ProductRESTController {
     @Autowired
     private ProductService productService;
-    @Autowired
-    private ProductSubcategoryService productSubcategoryService;
-    @Autowired
-    private ProductModelService productModelService;
-    @Autowired
-    private UnitMeasureService unitMeasureService;
 
     @RequestMapping(value = "/")
     public String index() {
@@ -32,18 +26,7 @@ public class ProductRESTController {
 
     @RequestMapping(value = "/search/{searchRequest}/{count}")
     public List<Product> searchProduct(@PathVariable("searchRequest") String searchRequest, @PathVariable("count") Integer count) {
-        List<Product> products = productService.searchProduct(searchRequest);
-        List<Product> result = new ArrayList<>();
-
-        for (int i = 0; i < (count + 1) * 20; i++) {
-            if (i < products.size()) {
-                result.add(products.get(i));
-            } else {
-                break;
-            }
-        }
-
-        return result;
+        return productService.searchProduct(searchRequest, count);
     }
 
     @RequestMapping(value = "/get_top_five")
@@ -57,8 +40,10 @@ public class ProductRESTController {
     }
 
     @RequestMapping(value = "/products/delete/{productID}")
-    public void deleteProduct(@PathVariable("productID") Integer productID) {
+    public Integer deleteProduct(@PathVariable("productID") Integer productID) {
+        Integer id = productID;
         productService.delete(productID);
+        return id;
     }
 
     @RequestMapping(value = "/products/create")
@@ -67,23 +52,8 @@ public class ProductRESTController {
     }
 
     @RequestMapping(value = "/products/update")
-    public void updateProduct(@RequestBody Product product) {
+    public Integer updateProduct(@RequestBody Product product) {
         productService.update(product);
+        return product.getId();
     }
-
-    @RequestMapping(value = "/get_subcategories")
-    public List<ProductSubcategory> getProductSubcategories() {
-        return productSubcategoryService.getAll();
-    }
-
-    @RequestMapping(value = "/get_models")
-    public List<ProductModel> getProductModels() {
-        return productModelService.getAll();
-    }
-
-    @RequestMapping(value = "/get_unitmeasurecode")
-    public List<UnitMeasure> getUnitMeasureCodes() {
-        return unitMeasureService.getAll();
-    }
-
 }

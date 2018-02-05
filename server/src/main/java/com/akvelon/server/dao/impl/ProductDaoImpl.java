@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Implementation of the abstract class of SuperDao
@@ -18,9 +19,6 @@ import java.util.List;
  */
 @Repository
 public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
-    private static ProductDaoImpl productDao;
-    private static RowMapper<Product> rowMapper;
-
     @Autowired
     private ProductPhotoDao productPhotoDao;
     @Autowired
@@ -35,9 +33,9 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
     private final String SQL_INSERT = "INSERT INTO product (Name, ProductNumber, MakeFlag, FinishedGoodsFlag, Color, SafetyStockLevel, ReorderPoint, StandardCost, ListPrice, Size, SizeUnitMeasureCode, WeightUnitMeasureCode, Weight, DaysToManufacture, ProductLine, Class, Style, ProductSubcategoryID, ProductModelID, SellStartDate, SellEndDate, DiscontinuedDate, rowguid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE product SET Name = ?, ProductNumber = ?, MakeFlag = ?, FinishedGoodsFlag = ?, Color = ?, SafetyStockLevel = ?, ReorderPoint = ?, StandardCost = ?, ListPrice = ?, Size = ?, SizeUnitMeasureCode = ?, WeightUnitMeasureCode = ?, Weight = ?, DaysToManufacture = ?, ProductLine = ?, Class = ?, Style = ?, ProductSubcategoryID = ?, ProductModelID = ?, SellStartDate = ?, SellEndDate = ?, DiscontinuedDate = ?, rowguid = ? WHERE ProductID = ?";
     private final String SQL_GET_PRODUCTPHOTO = "SELECT ProductPhotoID FROM productproductphoto WHERE ProductID = ?";
-    private final String SQL_INSERT_PRODUCTPRODUCTPHOTO = "INSERT INTO productproductphoto (ProductID, ProductPhotoID, Primary) values (?, ?, ?) ON DUPLICATE KEY UPDATE ProdectID = ProductID";
+    private final String SQL_INSERT_PRODUCTPRODUCTPHOTO = "INSERT INTO productproductphoto (ProductID, ProductPhotoID, Prim) values (?, ?, ?)";
     private final String SQL_SEARCH = "SELECT * FROM product WHERE Name LIKE \"%%%s%%\"";
-    private final String SQL_DELETE_PRODUCTPRODUCTPHOTO = "DELETE * FROM productproductphoto WHERE ProductID = ?";
+    private final String SQL_DELETE_PRODUCTPRODUCTPHOTO = "DELETE FROM productproductphoto WHERE ProductID = ?";
     private final String SQL_GET_TOP_FIVE = "SELECT *, COUNT(*) FROM product AS t1\n" +
             "LEFT JOIN transactionhistoryarchive AS t2 ON t1.ProductID = t2.ProductID AND t2.TransactionType = 'S' \n" +
             "LEFT JOIN productsubcategory AS t3 ON t1.ProductSubcategoryID = t3.ProductSubcategoryID \n" +
@@ -46,50 +44,6 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
 
     protected ProductDaoImpl() {
         super(new Product());
-        if (productDao == null) {
-            productDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                Product product = new Product();
-
-                product.setId(rs.getInt("ProductID"));
-                product.setName(rs.getString("Name"));
-                product.setProductNumber(rs.getString("ProductNumber"));
-                product.setMakeFlag(rs.getInt("MakeFlag") == 1);
-                product.setFinishedGoodsFlag(rs.getInt("FinishedGoodsFlag") == 1);
-                product.setColor(rs.getString("Color"));
-                product.setSafetyStockLevel(rs.getInt("SafetyStockLevel"));
-                product.setReorderPoint(rs.getInt("ReorderPoint"));
-                product.setStandardCost(rs.getDouble("StandardCost"));
-                product.setListPrice(rs.getDouble("ListPrice"));
-                product.setSize(rs.getString("Size"));
-                product.setSizeUnitMeasureCode(unitMeasureDao.read(rs.getString("SizeUnitMeasureCode")));
-                product.setWeightUnitMeasureCode(unitMeasureDao.read(rs.getString("WeightUnitMeasureCode")));
-                product.setWeight(rs.getDouble("Weight"));
-                product.setDaysToManufacture(rs.getInt("DaysToManufacture"));
-                product.setProductLine(rs.getString("ProductLine") == null ? null : ProductLine.valueOf(rs.getString("ProductLine")));
-                product.setProductClass(rs.getString("Class") == null ? null : ProductClass.valueOf(rs.getString("Class")));
-                product.setProductStyle(rs.getString("Style") == null ? null : ProductStyle.valueOf(rs.getString("Style")));
-                product.setProductSubcategory(productSubcategoryDao.read(rs.getInt("ProductSubcategoryID")));
-                product.setProductModel(productModelDao.read(rs.getInt("ProductModelID")));
-                product.setSellStartDate(rs.getDate("SellStartDate"));
-                product.setSellEndDate(rs.getDate("SellEndDate"));
-                product.setDiscontinuedDate(rs.getDate("DiscontinuedDate"));
-                product.setRowguid(rs.getString("rowguid"));
-                product.setProductReviews(productReviewDao.readAllBy("ProductID", product.getId()));
-
-                List<Integer> productPhotoIDList = this.jdbcTemplate.queryForList(SQL_GET_PRODUCTPHOTO, new Object[] {product.getId()}, Integer.class);
-                List<ProductPhoto> productPhotos = new ArrayList<>();
-
-                for (Integer id : productPhotoIDList) {
-                    productPhotos.add(productPhotoDao.read(id));
-                }
-
-                product.setProductPhotos(productPhotos);
-
-                return product;
-            };
-        }
     }
 
     @Override
@@ -136,7 +90,46 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
 
     @Override
     protected RowMapper<Product> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            Product product = new Product();
+
+            product.setId(rs.getInt("ProductID"));
+            product.setName(rs.getString("Name"));
+            product.setProductNumber(rs.getString("ProductNumber"));
+            product.setMakeFlag(rs.getInt("MakeFlag") == 1);
+            product.setFinishedGoodsFlag(rs.getInt("FinishedGoodsFlag") == 1);
+            product.setColor(rs.getString("Color"));
+            product.setSafetyStockLevel(rs.getInt("SafetyStockLevel"));
+            product.setReorderPoint(rs.getInt("ReorderPoint"));
+            product.setStandardCost(rs.getDouble("StandardCost"));
+            product.setListPrice(rs.getDouble("ListPrice"));
+            product.setSize(rs.getString("Size"));
+            product.setSizeUnitMeasureCode(unitMeasureDao.read(rs.getString("SizeUnitMeasureCode")));
+            product.setWeightUnitMeasureCode(unitMeasureDao.read(rs.getString("WeightUnitMeasureCode")));
+            product.setWeight(rs.getDouble("Weight"));
+            product.setDaysToManufacture(rs.getInt("DaysToManufacture"));
+            product.setProductLine(rs.getString("ProductLine") == null ? null : ProductLine.valueOf(rs.getString("ProductLine")));
+            product.setProductClass(rs.getString("Class") == null ? null : ProductClass.valueOf(rs.getString("Class")));
+            product.setProductStyle(rs.getString("Style") == null ? null : ProductStyle.valueOf(rs.getString("Style")));
+            product.setProductSubcategory(productSubcategoryDao.read(rs.getInt("ProductSubcategoryID")));
+            product.setProductModel(productModelDao.read(rs.getInt("ProductModelID")));
+            product.setSellStartDate(rs.getDate("SellStartDate"));
+            product.setSellEndDate(rs.getDate("SellEndDate"));
+            product.setDiscontinuedDate(rs.getDate("DiscontinuedDate"));
+            product.setRowguid(rs.getString("rowguid"));
+            product.setProductReviews(productReviewDao.readAllBy("ProductID", product.getId()));
+
+            List<Integer> productPhotoIDList = this.jdbcTemplate.queryForList(SQL_GET_PRODUCTPHOTO, new Object[] {product.getId()}, Integer.class);
+            List<ProductPhoto> productPhotos = new ArrayList<>();
+
+            for (Integer id : productPhotoIDList) {
+                productPhotos.add(productPhotoDao.read(id));
+            }
+
+            product.setProductPhotos(productPhotos);
+
+            return product;
+        };
     }
 
     @Override
@@ -155,7 +148,7 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
         ps.setString(10, value.getSize());
         ps.setString(11, value.getSizeUnitMeasureCode().getId());
         ps.setString(12, value.getWeightUnitMeasureCode().getId());
-        ps.setDouble(13, value.getWeight());
+        ps.setDouble(13, value.getWeight() == null ? 0.0 : value.getWeight());
         ps.setInt(14, value.getDaysToManufacture());
         ps.setString(15, value.getProductLine().name());
         ps.setString(16, value.getProductClass().name());
@@ -165,7 +158,7 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
         ps.setDate(20, value.getSellStartDate());
         ps.setDate(21, value.getSellEndDate());
         ps.setDate(22, value.getDiscontinuedDate());
-        ps.setString(23, value.getRowguid());
+        ps.setString(23, UUID.randomUUID().toString().toUpperCase());
 
         return ps;
     }
@@ -186,7 +179,7 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
         ps.setString(10, value.getSize());
         ps.setString(11, value.getSizeUnitMeasureCode().getId());
         ps.setString(12, value.getWeightUnitMeasureCode().getId());
-        ps.setDouble(13, value.getWeight());
+        ps.setDouble(13, value.getWeight() == null ? 0.0 : value.getWeight());
         ps.setInt(14, value.getDaysToManufacture());
         ps.setString(15, value.getProductLine().name());
         ps.setString(16, value.getProductClass().name());

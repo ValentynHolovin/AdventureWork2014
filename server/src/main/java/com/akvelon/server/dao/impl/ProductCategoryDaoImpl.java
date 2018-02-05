@@ -20,32 +20,17 @@ import java.util.List;
  */
 @Repository
 public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements ProductCategoryDao {
-    private static ProductCategoryDaoImpl productCategoryDao;
-    private static RowMapper<ProductCategory> rowMapper;
-    @Autowired
-    private ProductSubcategoryDao productSubcategoryDao;
+/*    @Autowired
+    private ProductSubcategoryDao productSubcategoryDao;*/
 
     private final String SQL_INSERT = "INSERT INTO productcategory (Name, rowguid) values (?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productcategory SET Name = ?, rowguid = ? WHERE ProductCategoryID = ?";
 
     protected ProductCategoryDaoImpl() {
         super(new ProductCategory());
-        if (productCategoryDao == null) {
-            productCategoryDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                ProductCategory productCategory = new ProductCategory();
-
-                productCategory.setId(rs.getInt("ProductCategoryID"));
-                productCategory.setName(rs.getString("Name"));
-                productCategory.setRowguid(rs.getString("rowguid"));
-
-                return productCategory;
-            };
-        }
     }
 
-    @Override
+/*    @Override
     public void delete(Integer key) {
         List<ProductSubcategory> productSubcategories = productSubcategoryDao.readAllBy("ProductCategoryID", key);
 
@@ -54,11 +39,19 @@ public class ProductCategoryDaoImpl extends SuperDao<ProductCategory> implements
         }
 
         super.delete(key);
-    }
+    }*/
 
     @Override
     protected RowMapper<ProductCategory> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            ProductCategory productCategory = new ProductCategory();
+
+            productCategory.setId(rs.getInt("ProductCategoryID"));
+            productCategory.setName(rs.getString("Name"));
+            productCategory.setRowguid(rs.getString("rowguid"));
+
+            return productCategory;
+        };
     }
 
     @Override

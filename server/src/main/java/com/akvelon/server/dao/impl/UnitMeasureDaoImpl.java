@@ -15,26 +15,11 @@ import java.sql.*;
  */
 @Repository
 public class UnitMeasureDaoImpl extends SuperStringDao<UnitMeasure> implements UnitMeasureDao {
-    private static UnitMeasureDaoImpl unitMeasureDao;
-    private static RowMapper<UnitMeasure> rowMapper;
-
     private final String SQL_INSERT = "INSERT INTO unitmeasure (UnitMeasureCode, Name) VALUES (?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE unitmeasure SET UnitMeasureCode = ?, Name = ? WHERE UnitMeasureCode = ?";
 
     protected UnitMeasureDaoImpl() {
         super(new UnitMeasure());
-        if (unitMeasureDao == null) {
-            unitMeasureDao = this;
-
-            rowMapper = (ResultSet rs, int conNum) -> {
-                UnitMeasure unitMeasure = new UnitMeasure();
-
-                unitMeasure.setId(rs.getString("UnitMeasureCode"));
-                unitMeasure.setName(rs.getString("Name"));
-
-                return unitMeasure;
-            };
-        }
     }
 
     @Override
@@ -44,7 +29,14 @@ public class UnitMeasureDaoImpl extends SuperStringDao<UnitMeasure> implements U
 
     @Override
     protected RowMapper<UnitMeasure> getRowMapper() {
-        return rowMapper;
+        return (ResultSet rs, int conNum) -> {
+            UnitMeasure unitMeasure = new UnitMeasure();
+
+            unitMeasure.setId(rs.getString("UnitMeasureCode"));
+            unitMeasure.setName(rs.getString("Name"));
+
+            return unitMeasure;
+        };
     }
 
     @Override
