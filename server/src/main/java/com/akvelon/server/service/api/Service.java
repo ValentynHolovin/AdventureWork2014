@@ -35,14 +35,16 @@ public interface Service<K, V> {
     /**
      * Update domain object of type V in database tables through DAO object.
      * @param value domain object.
+     * @return updated objectID
      */
-    void update(V value);
+    K update(V value);
 
     /**
      * Delete domain object of type V from the database through DAO object.
      * @param key object ID (primary key).
+     * @return deleted objectID
      */
-    void delete(K key);
+    K delete(K key);
 
     /**
      * Read the domain object of type V, which contains a value of type T in the field "fieldName".

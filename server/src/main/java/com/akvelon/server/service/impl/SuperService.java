@@ -1,6 +1,5 @@
 package com.akvelon.server.service.impl;
 
-import com.akvelon.server.dao.api.Dao;
 import com.akvelon.server.domain.Entity;
 import com.akvelon.server.service.api.Service;
 
@@ -13,8 +12,7 @@ import java.util.List;
  * @param <V> type of domain object.
  */
 @org.springframework.stereotype.Service
-public class SuperService<V extends Entity<Integer>> implements Service<Integer, V> {
-    private Dao<Integer, V> dao;
+public abstract class SuperService<K, V extends Entity<K>> implements Service<K, V> {
 
     @Override
     public List<V> getAll() {
@@ -22,23 +20,25 @@ public class SuperService<V extends Entity<Integer>> implements Service<Integer,
     }
 
     @Override
-    public Integer create(V value) {
+    public K create(V value) {
         return getRepository().create(value);
     }
 
     @Override
-    public V read(Integer key) {
+    public V read(K key) {
         return getRepository().read(key);
     }
 
     @Override
-    public void update(V value) {
+    public K update(V value) {
         getRepository().update(value);
+        return value.getId();
     }
 
     @Override
-    public void delete(Integer key) {
+    public K delete(K key) {
         getRepository().delete(key);
+        return key;
     }
 
     @Override
@@ -51,8 +51,4 @@ public class SuperService<V extends Entity<Integer>> implements Service<Integer,
         return getRepository().readAllBy(fieldName, value);
     }
 
-    @Override
-    public Dao<Integer, V> getRepository() {
-        return dao;
-    }
 }

@@ -7,6 +7,7 @@ import com.akvelon.server.domain.Product;
 import com.akvelon.server.domain.ProductSubcategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -19,11 +20,9 @@ import java.util.List;
  * @see com.akvelon.server.dao.api.ProductSubcategoryDao
  */
 @Repository
-public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> implements ProductSubcategoryDao {
+public class ProductSubcategoryDaoImpl extends SuperDao<Integer, ProductSubcategory> implements ProductSubcategoryDao {
     @Autowired
     private ProductCategoryDao productCategoryDao;
-/*    @Autowired
-    private ProductDao productDao;*/
 
     private final String SQL_INSERT = "INSERT INTO productsubcategory (ProductCategoryID, Name, rowguid) values (?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productsubcategory SET ProductCategoryID = ?, Name = ?, rowguid = ? WHERE ProductSubcategoryID = ?";
@@ -33,17 +32,10 @@ public class ProductSubcategoryDaoImpl extends SuperDao<ProductSubcategory> impl
         return new ProductSubcategory();
     }
 
-    /*    @Override
-    public void delete(Integer key) {
-        List<Product> products = productDao.readAllBy("ProductSubcategoryID", key);
-
-        for (Product product : products) {
-            product.setProductSubcategory(null);
-            productDao.update(product);
-        }
-
-        super.delete(key);
-    }*/
+    @Override
+    protected void setId(ProductSubcategory value, KeyHolder keyHolder) {
+        value.setId(keyHolder.getKey().intValue());
+    }
 
     @Override
     protected RowMapper<ProductSubcategory> getRowMapper() {

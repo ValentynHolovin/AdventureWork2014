@@ -3,6 +3,7 @@ package com.akvelon.server.dao.impl;
 import com.akvelon.server.dao.api.ProductReviewDao;
 import com.akvelon.server.domain.ProductReview;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -14,13 +15,18 @@ import java.sql.*;
  * @see com.akvelon.server.dao.api.ProductReviewDao
  */
 @Repository
-public class ProductReviewDaoImpl extends SuperDao<ProductReview> implements ProductReviewDao {
+public class ProductReviewDaoImpl extends SuperDao<Integer, ProductReview> implements ProductReviewDao {
     private final String SQL_INSERT = "INSERT INTO productreview (ProductID, ReviewerName, EmailAddress, Rating, Comments) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE ReviewerName = ReviewerName";
     private final String SQL_UPDATE = "UPDATE productreview SET ProductID = ?, ReviewerName = ?, EmailAddress = ?, Rating = ?, Comments = ? WHERE ProductReviewID = ?";
 
     @Override
     protected ProductReview getClassObject() {
         return new ProductReview();
+    }
+
+    @Override
+    protected void setId(ProductReview value, KeyHolder keyHolder) {
+        value.setId(keyHolder.getKey().intValue());
     }
 
     @Override

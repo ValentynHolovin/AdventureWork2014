@@ -10,6 +10,7 @@ import com.akvelon.server.domain.ProductDescription;
 import com.akvelon.server.domain.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -23,13 +24,11 @@ import java.util.List;
  * @see com.akvelon.server.dao.api.ProductModelDao
  */
 @Repository
-public class ProductModelDaoImpl extends SuperDao<ProductModel> implements ProductModelDao {
+public class ProductModelDaoImpl extends SuperDao<Integer, ProductModel> implements ProductModelDao {
     @Autowired
     private IllustrationDao illustrationDao;
     @Autowired
     private ProductDescriptionDao productDescriptionDao;
-/*    @Autowired
-    private ProductDao productDao;*/
 
     private final String SQL_INSERT = "INSERT INTO productmodel (Name, CatalogDescription, Instructions, rowguid) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE productmodel SET Name = ?, CatalogDescription = ?, Instructions = ?, rowguid = ? WHERE ProductModelID = ?";
@@ -45,25 +44,10 @@ public class ProductModelDaoImpl extends SuperDao<ProductModel> implements Produ
         return new ProductModel();
     }
 
-    /*    @Override
-    public void delete(Integer key) {
-        List<Product> products = productDao.readAllBy("ProductModelID", key);
-
-        for (Product product : products) {
-            product.setProductModel(null);
-            productDao.update(product);
-        }
-
-        this.jdbcTemplate.update(SQL_DELETE_PRODUCTMODELILLUSTRATION, key);
-
-        for (ProductDescription productDescription : read(key).getProductDescriptions()) {
-            productDescriptionDao.delete(productDescription.getId());
-        }
-
-        this.jdbcTemplate.update(SQL_DELETE_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE, key);
-
-        super.delete(key);
-    }*/
+    @Override
+    protected void setId(ProductModel value, KeyHolder keyHolder) {
+        value.setId(keyHolder.getKey().intValue());
+    }
 
     @Override
     public Integer create(ProductModel value) {

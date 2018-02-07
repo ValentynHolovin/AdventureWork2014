@@ -80,7 +80,7 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void create2() {
+    public void createProductWithNullProductPhotos() {
         // given
         product.setProductPhotos(null);
         when(productPhotoDao.readAllBy("ProductPhotoID", 1)).thenReturn(productPhotos);

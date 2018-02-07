@@ -19,38 +19,43 @@ public class ProductRESTController {
     @Autowired
     private ProductService productService;
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/")
     public String index() {
         return "index.html";
     }
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/search/{searchRequest}/{count}")
     public List<Product> searchProduct(@PathVariable("searchRequest") String searchRequest, @PathVariable("count") Integer count) {
         return productService.searchProduct(searchRequest, count);
     }
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/get_top_five")
     public List<Product> getTopFive() {
         return productService.getTopFive();
     }
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/products/{productID}")
     public Product getProduct(@PathVariable("productID") Integer productID) {
         return productService.read(productID);
     }
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/products/delete/{productID}")
     public Integer deleteProduct(@PathVariable("productID") Integer productID) {
-        Integer id = productID;
-        productService.delete(productID);
-        return id;
+        return productService.delete(productID);
     }
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/products/create")
     public Integer createProduct(@RequestBody Product product) {
         return productService.create(product);
     }
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/products/update")
     public Integer updateProduct(@RequestBody Product product) {
         productService.update(product);

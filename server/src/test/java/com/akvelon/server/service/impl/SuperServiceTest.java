@@ -26,12 +26,12 @@ public class SuperServiceTest {
     @Mock
     private ProductCategoryDao productCategoryDao;
     @InjectMocks
-    private SuperService<ProductCategory> productCategorySuperService;
+    private SuperService<Integer, ProductCategory> productCategorySuperService = new ProductCategoryServiceImpl();
     private ProductCategory productCategory;
     private List<ProductCategory> productCategories;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         productCategories = new ArrayList<>();
         productCategory = new ProductCategory();

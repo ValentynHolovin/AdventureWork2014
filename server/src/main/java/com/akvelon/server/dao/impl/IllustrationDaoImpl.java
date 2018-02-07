@@ -3,6 +3,7 @@ package com.akvelon.server.dao.impl;
 import com.akvelon.server.dao.api.IllustrationDao;
 import com.akvelon.server.domain.Illustration;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -14,7 +15,7 @@ import java.sql.*;
  * @see com.akvelon.server.dao.api.IllustrationDao
  */
 @Repository
-public class IllustrationDaoImpl extends SuperDao<Illustration> implements IllustrationDao {
+public class IllustrationDaoImpl extends SuperDao<Integer, Illustration> implements IllustrationDao {
 
     private final String SQL_INSERT = "INSERT INTO illustration (Diagram) values (?) ON DUPLICATE KEY UPDATE Diagram = Diagram";
     private final String SQL_UPDATE = "UPDATE illustration SET Diagram = ? WHERE IllustrationID = ?";
@@ -22,6 +23,11 @@ public class IllustrationDaoImpl extends SuperDao<Illustration> implements Illus
     @Override
     protected Illustration getClassObject() {
         return new Illustration();
+    }
+
+    @Override
+    protected void setId(Illustration value, KeyHolder keyHolder) {
+        value.setId(keyHolder.getKey().intValue());
     }
 
     @Override

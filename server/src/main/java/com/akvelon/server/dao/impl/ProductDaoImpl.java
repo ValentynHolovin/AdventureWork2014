@@ -4,6 +4,7 @@ import com.akvelon.server.dao.api.*;
 import com.akvelon.server.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -18,7 +19,7 @@ import java.util.UUID;
  * @see com.akvelon.server.dao.api.ProductDao
  */
 @Repository
-public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
+public class ProductDaoImpl extends SuperDao<Integer, Product> implements ProductDao {
     @Autowired
     private ProductPhotoDao productPhotoDao;
     @Autowired
@@ -45,6 +46,11 @@ public class ProductDaoImpl extends SuperDao<Product> implements ProductDao {
     @Override
     protected Product getClassObject() {
         return new Product();
+    }
+
+    @Override
+    protected void setId(Product value, KeyHolder keyHolder) {
+        value.setId(keyHolder.getKey().intValue());
     }
 
     @Override

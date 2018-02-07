@@ -3,6 +3,7 @@ package com.akvelon.server.dao.impl;
 import com.akvelon.server.dao.api.CultureDao;
 import com.akvelon.server.domain.Culture;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -11,13 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Implementation of the abstract class of SuperStringDao
+ * Implementation of the abstract class of SuperDao
  * and the interface CultureDao for the domain object Culture.
- * @see com.akvelon.server.dao.impl.SuperStringDao
+ * @see com.akvelon.server.dao.impl.SuperDao
  * @see com.akvelon.server.dao.api.CultureDao
  */
 @Repository
-public class CultureDaoImpl extends SuperStringDao<Culture> implements CultureDao {
+public class CultureDaoImpl extends SuperDao<String, Culture> implements CultureDao {
 
     private final String SQL_INSERT = "INSERT INTO culture (CultureID, Name) values (?, ?) ON DUPLICATE KEY UPDATE Name = Name";
     private final String SQL_UPDATE = "UPDATE culture SET CultureID = ?, Name = ? WHERE CultureID = ?";
@@ -26,6 +27,11 @@ public class CultureDaoImpl extends SuperStringDao<Culture> implements CultureDa
     @Override
     protected Culture getClassObject() {
         return new Culture();
+    }
+
+    @Override
+    protected void setId(Culture value, KeyHolder keyHolder) {
+        // do nothing
     }
 
     @Override

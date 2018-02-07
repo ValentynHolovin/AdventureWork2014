@@ -3,6 +3,7 @@ package com.akvelon.server.dao.impl;
 import com.akvelon.server.dao.api.ProductPhotoDao;
 import com.akvelon.server.domain.ProductPhoto;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -15,13 +16,18 @@ import java.sql.*;
  * @see com.akvelon.server.dao.api.ProductPhotoDao
  */
 @Repository
-public class ProductPhotoDaoImpl extends SuperDao<ProductPhoto> implements ProductPhotoDao {
+public class ProductPhotoDaoImpl extends SuperDao<Integer, ProductPhoto> implements ProductPhotoDao {
     private final String SQL_INSERT = "INSERT INTO productphoto (ThumbNailPhoto, ThumbnailPhotoFileName, LargePhoto, LargePhotoFileName) values (?, ?, ?, ?) ON DUPLICATE KEY UPDATE ThumbnailPhotoFileName = ThumbnailPhotoFileName";
     private final String SQL_UPDATE = "UPDATE productphoto SET ThumbNailPhoto = ?, ThumbnailPhotoFileName = ?, LargePhoto = ?, LargePhotoFileName = ? WHERE ProductPhotoID = ?";
 
     @Override
     protected ProductPhoto getClassObject() {
         return new ProductPhoto();
+    }
+
+    @Override
+    protected void setId(ProductPhoto value, KeyHolder keyHolder) {
+        value.setId(keyHolder.getKey().intValue());
     }
 
     @Override

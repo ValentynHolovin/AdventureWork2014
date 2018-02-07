@@ -6,6 +6,7 @@ import com.akvelon.server.domain.Culture;
 import com.akvelon.server.domain.ProductDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -17,7 +18,7 @@ import java.sql.*;
  * @see com.akvelon.server.dao.api.ProductDescriptionDao
  */
 @Repository
-public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> implements ProductDescriptionDao {
+public class ProductDescriptionDaoImpl extends SuperDao<Integer, ProductDescription> implements ProductDescriptionDao {
     @Autowired
     private CultureDao cultureDao;
 
@@ -28,6 +29,11 @@ public class ProductDescriptionDaoImpl extends SuperDao<ProductDescription> impl
     @Override
     protected ProductDescription getClassObject() {
         return new ProductDescription();
+    }
+
+    @Override
+    protected void setId(ProductDescription value, KeyHolder keyHolder) {
+        value.setId(keyHolder.getKey().intValue());
     }
 
     @Override

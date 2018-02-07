@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @see com.akvelon.server.service.impl.SuperService
  */
 @Service
-public class ProductModelServiceImpl extends SuperService<ProductModel> implements ProductModelService {
+public class ProductModelServiceImpl extends SuperService<Integer, ProductModel> implements ProductModelService {
     @Autowired
     ProductModelDao productModelDao;
     @Autowired
@@ -35,7 +35,7 @@ public class ProductModelServiceImpl extends SuperService<ProductModel> implemen
     }
 
     @Override
-    public void update(ProductModel value) {
+    public Integer update(ProductModel value) {
         for (int i = 0; i < value.getIllustrations().size(); i++) {
             if (value.getIllustrations().get(i).getId() != null) {
                 illustrationDao.update(value.getIllustrations().get(i));
@@ -50,7 +50,7 @@ public class ProductModelServiceImpl extends SuperService<ProductModel> implemen
                 productDescriptionDao.create(value.getProductDescriptions().get(i));
             }
         }
-        super.update(value);
+        return super.update(value);
     }
 
     @Override

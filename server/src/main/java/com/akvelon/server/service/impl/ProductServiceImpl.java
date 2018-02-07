@@ -18,7 +18,7 @@ import java.util.List;
  * @see com.akvelon.server.service.impl.SuperService
  */
 @Service
-public class ProductServiceImpl extends SuperService<Product> implements ProductService{
+public class ProductServiceImpl extends SuperService<Integer, Product> implements ProductService{
     @Autowired
     private ProductDao productDao;
     @Autowired
@@ -39,7 +39,7 @@ public class ProductServiceImpl extends SuperService<Product> implements Product
     }
 
     @Override
-    public void update(Product value) {
+    public Integer update(Product value) {
         if (value.getProductPhotos() != null) {
             for (int i = 0; i < value.getProductPhotos().size(); i++) {
                 if (value.getProductPhotos().get(i).getId() != null) {
@@ -52,7 +52,7 @@ public class ProductServiceImpl extends SuperService<Product> implements Product
             value.setProductPhotos(productPhotoDao.readAllBy("ProductPhotoID", 1));
         }
 
-        super.update(value);
+        return super.update(value);
     }
 
     @Override

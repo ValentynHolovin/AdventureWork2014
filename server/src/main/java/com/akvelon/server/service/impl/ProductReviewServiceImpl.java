@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @see com.akvelon.server.service.impl.SuperService
  */
 @Service
-public class ProductReviewServiceImpl extends SuperService<ProductReview> implements ProductReviewService {
+public class ProductReviewServiceImpl extends SuperService<Integer, ProductReview> implements ProductReviewService {
     @Autowired
     private ProductReviewDao productReviewDao;
 

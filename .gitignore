@@ -2,3 +2,5 @@
 .idea
 target/
 adventure_work.iml
+node/
+yarn.lock
