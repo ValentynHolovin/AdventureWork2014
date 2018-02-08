@@ -1,5 +1,5 @@
 
-const MAIN_SERVER = 'http://192.168.2.64:8080';
+const MAIN_SERVER = 'http://localhost:8080';
 
 export default {
   url: `${ MAIN_SERVER }`,
