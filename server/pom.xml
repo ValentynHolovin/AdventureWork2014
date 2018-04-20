@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>com.akvelon</groupId>
 		<artifactId>adventure_work</artifactId>
-		<version>1.0</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -55,7 +55,6 @@
 			<version>1.5.9.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.akvelon</groupId>
 			<artifactId>client</artifactId>
